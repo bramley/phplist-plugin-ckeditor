@@ -27,7 +27,8 @@ This should contain
 
 * the file CKEditorPlugin.php
 * the directory CKEditorPlugin
-### Location of the CKEditor and KCFinder directories###
+
+### Location of the CKEditor and KCFinder directories ###
 The CKEditor and KCFinder directories must be within the web root. 
 
 If you have the default plugin location then the plugin will use the correct paths automatically.
