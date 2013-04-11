@@ -22,7 +22,7 @@
 class CKEditorPlugin extends phplistPlugin
 {
 	const VERSION_FILE = 'version.txt';
-	const CODE_DIR = 'CKEditorPlugin/';
+	const CODE_DIR = '/CKEditorPlugin/';
     /*
      *  Inherited variables
      */
