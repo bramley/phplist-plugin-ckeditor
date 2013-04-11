@@ -57,7 +57,7 @@ class CKEditorPlugin extends phplistPlugin
               'category'=> 'composition',
             ),
             'ckeditor_path' => array (
-              'value' => PLUGIN_ROOTDIR . '/' . self::CODE_DIR . 'ckeditor',
+              'value' => PLUGIN_ROOTDIR . self::CODE_DIR . 'ckeditor',
               'description' => 'path to CKeditor',
               'type' => 'text',
               'allowempty' => 0,
@@ -71,7 +71,7 @@ class CKEditorPlugin extends phplistPlugin
               'category'=> 'composition',
             ),
             'kcfinder_path' => array (
-              'value' =>  PLUGIN_ROOTDIR . '/' . self::CODE_DIR . 'kcfinder',
+              'value' =>  PLUGIN_ROOTDIR . self::CODE_DIR . 'kcfinder',
               'description' => 'path to KCFinder',
               'type' => 'text',
               'allowempty' => 0,
