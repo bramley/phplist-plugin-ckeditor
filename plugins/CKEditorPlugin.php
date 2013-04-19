@@ -105,7 +105,7 @@ class CKEditorPlugin extends phplistPlugin
         $kcFinderConfig = array(
             'disabled' => false
         );
-        $upload = getConfig('upload_path');
+        $upload = getConfig('kcfinder_upload_path');
 
         if ($upload != '' || (defined('UPLOADIMAGES_DIR') && (($upload = UPLOADIMAGES_DIR) != ''))) {
             $upload = ltrim($upload, '/');
