@@ -21,8 +21,8 @@
  */
 class CKEditorPlugin extends phplistPlugin
 {
-	const VERSION_FILE = 'version.txt';
-	const CODE_DIR = '/CKEditorPlugin/';
+    const VERSION_FILE = 'version.txt';
+    const CODE_DIR = '/CKEditorPlugin/';
     /*
      *  Inherited variables
      */
@@ -34,8 +34,8 @@ class CKEditorPlugin extends phplistPlugin
     function __construct()
     {
         $this->coderoot = dirname(__FILE__) . self::CODE_DIR;
-		$this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
-			? file_get_contents($f)
+        $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
+            ? file_get_contents($f)
             : '';
         $this->settings = array(
             'ckeditor_width' => array (
