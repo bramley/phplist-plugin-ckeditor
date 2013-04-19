@@ -84,6 +84,13 @@ class CKEditorPlugin extends phplistPlugin
               'allowempty' => 1,
               'category'=> 'composition',
             ),
+            'kcfinder_image_directory' => array (
+              'value' => 'image',
+              'description' => 'name of the image subdirectory of the file upload directory',
+              'type' => 'text',
+              'allowempty' => 0,
+              'category'=> 'composition',
+            ),
         );
         parent::__construct();
     }
@@ -108,6 +115,7 @@ class CKEditorPlugin extends phplistPlugin
 
         $content = htmlspecialchars($content);
         $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
+        $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
         $path = htmlspecialchars(rtrim(getConfig('ckeditor_path'), '/'));
         $ckConfigPath = htmlspecialchars(rtrim(getConfig('ckeditor_config_path'), '/'));
         $customConfig = $ckConfigPath ? "customConfig: '$ckConfigPath'," : '';
@@ -128,10 +136,10 @@ CKEDITOR.replace('$fieldname', {
     width: $width,
     height: $height,
     filebrowserBrowseUrl: '$kcPath/browse.php?type=files',
-    filebrowserImageBrowseUrl: '$kcPath/browse.php?type=images',
+    filebrowserImageBrowseUrl: '$kcPath/browse.php?type=$kcImageDir',
     filebrowserFlashBrowseUrl: '$kcPath/browse.php?type=flash',
     filebrowserUploadUrl: '$kcPath/upload.php?type=files',
-    filebrowserImageUploadUrl: '$kcPath/upload.php?type=images',
+    filebrowserImageUploadUrl: '$kcPath/upload.php?type=$kcImageDir',
     filebrowserFlashUploadUrl: '$kcPath/upload.php?type=flash'
 });
 </script>
