@@ -1,8 +1,0 @@
-version file to be overwritten for each release
-
-Empty change log file
-
-Corrected markdown error
-
-Initial version
-
