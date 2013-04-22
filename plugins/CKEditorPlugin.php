@@ -22,7 +22,7 @@
 class CKEditorPlugin extends phplistPlugin
 {
     const VERSION_FILE = 'version.txt';
-    const CODE_DIR = '/CKEditorPlugin/';
+    const PLUGIN_NAME = 'CKEditorPlugin';
     /*
      *  Inherited variables
      */
@@ -33,7 +33,7 @@ class CKEditorPlugin extends phplistPlugin
 
     function __construct()
     {
-        $this->coderoot = dirname(__FILE__) . self::CODE_DIR;
+        $this->coderoot = dirname(__FILE__) . '/' . self::PLUGIN_NAME . '/';
         $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
             ? file_get_contents($f)
             : '';
@@ -57,7 +57,7 @@ class CKEditorPlugin extends phplistPlugin
               'category'=> 'composition',
             ),
             'ckeditor_path' => array (
-              'value' => PLUGIN_ROOTDIR . self::CODE_DIR . 'ckeditor',
+              'value' => $this->coderoot . 'ckeditor',
               'description' => 'path to CKeditor',
               'type' => 'text',
               'allowempty' => 0,
@@ -71,7 +71,7 @@ class CKEditorPlugin extends phplistPlugin
               'category'=> 'composition',
             ),
             'kcfinder_path' => array (
-              'value' =>  PLUGIN_ROOTDIR . self::CODE_DIR . 'kcfinder',
+              'value' =>  $this->coderoot . 'kcfinder',
               'description' => 'path to KCFinder',
               'type' => 'text',
               'allowempty' => 0,
@@ -109,7 +109,7 @@ class CKEditorPlugin extends phplistPlugin
 
         if ($upload != '' || (defined('UPLOADIMAGES_DIR') && (($upload = UPLOADIMAGES_DIR) != ''))) {
             $upload = ltrim($upload, '/');
-            $kcFinderConfig['uploadURL'] = "http://{$_SERVER['SERVER_NAME']}/$upload";
+            $kcFinderConfig['uploadURL'] = "/$upload";
         }
         $_SESSION['KCFINDER'] = $kcFinderConfig;
 
