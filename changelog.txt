@@ -1,0 +1,5 @@
+version 2013-04-22
+      change tabs to spaces
+      GitHub issue #1, configurable image sub-directory
+      GitHub issue #3, correct name of configuration item
+      Simplify upload URL

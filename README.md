@@ -46,8 +46,10 @@ Similarly, if you already use CKEditor on your web site then you can use that ve
 The width and height of the editor window can be specified on the Settings page.
 
 The location of a directory where KCFinder can store uploaded images can be specified on the Settings page. The location entered here 
-will over-ride the UPLOADIMAGES_DIR value, if set, in config.php.
-Note that KCFinder will create two subdirectories, images and .thumbs, within the specified directory to store the full-size and thumbnail images.
+will override the UPLOADIMAGES_DIR value, if set, in config.php.
+
+Note that KCFinder will create two subdirectories within the specified directory to store the full-size and thumbnail images.
+The sub-directory for full-size images can be configured on the Settings page. The default value of `image` is fine for a new installation and for upgrading from FCKEditor.
 
 ## Custom configuration ##
 Other settings for the editor can be placed in a custom configuration file. This file needs to be within the web root and its
@@ -60,7 +62,26 @@ See <http://docs.ckeditor.com/#!/api/CKEDITOR.config> for how to specify configu
 Style definitions can be specified in the custom configuration file, and they will then appear in the Styles drop-down list when editing a message.
 Additionally, a CSS stylesheet file can be parsed to provide the style definitions.
 See <http://docs.ckeditor.com/#!/guide/dev_styles>
+
+## Custom build of CKEditor ##
+
+You can expand the functionality of CKEditor by adding plugins and creating a custom build, see <http://ckeditor.com/addons/plugins/all>.
+
+You should then install the new CKEditor on your web site and specify the path to the directory on the Settings page.
+
+## Upgrade from phplist 2.10.x with FCKEditor ##
+
+In phplist 2.10 the FCKIMAGES_DIR value in config.php defines the directory into which images will be uploaded.
+The value is relative to the phplist root directory.
+
+In phplist 2.11 and later a different value, UPLOADIMAGES_DIR, is used to define the directory. This value is relative to the web root,
+not to the phplist root directory.
+
+To continue using the same upload directory you must either set UPLOADIMAGES\_DIR correctly or override UPLOADIMAGES\_DIR by setting
+the upload directory on the Settings page.
+
 ## Version history ##
 
     version     Description
+    2013-04-22  Fixes for GitHub issues 1 and 3
     2013-04-11  Initial version for phplist 2.11.x releases
