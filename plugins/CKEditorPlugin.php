@@ -109,7 +109,7 @@ class CKEditorPlugin extends phplistPlugin
 
         if ($upload != '' || (defined('UPLOADIMAGES_DIR') && (($upload = UPLOADIMAGES_DIR) != ''))) {
             $upload = ltrim($upload, '/');
-            $kcFinderConfig['uploadURL'] = "http://{$_SERVER['SERVER_NAME']}/$upload";
+            $kcFinderConfig['uploadURL'] = "/$upload";
         }
         $_SESSION['KCFINDER'] = $kcFinderConfig;
 
