@@ -1,3 +1,6 @@
+version 2013-04-27
+      GitHub issue #2, Add configuration option to disable KCFinder
+
 version 2013-04-22
       change tabs to spaces
       GitHub issue #1, configurable image sub-directory
