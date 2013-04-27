@@ -17,10 +17,10 @@ The default plugin directory is `plugins` within the admin directory.
 You can use a directory outside of the web root by changing the definition of `PLUGIN_ROOTDIR` in config.php.
 The benefit of this is that plugins will not be affected when you upgrade phplist.
 ### Install through phplist ###
-Install on the Plugins page (menu Config > Plugins) using the package URL `https://github.com/bramley/phplist-ckeditorplugin/archive/master.zip`.
+Install on the Plugins page (menu Config > Plugins) using the package URL `https://github.com/bramley/phplist-plugin-ckeditor/archive/master.zip`.
 
 ### Install manually ###
-Download the plugin zip file from <https://github.com/bramley/phplist-ckeditorplugin/archive/master.zip>
+Download the plugin zip file from <https://github.com/bramley/phplist-plugin-ckeditor/archive/master.zip>
 
 Expand the zip file, then copy the contents of the plugins directory to your phplist plugins directory.
 This should contain
@@ -46,11 +46,12 @@ Similarly, if you already use CKEditor on your web site then you can use that ve
 The width and height of the editor window can be specified on the Settings page.
 
 The location of a directory where KCFinder can store uploaded images can be specified on the Settings page. The location entered here 
-will override the UPLOADIMAGES_DIR value, if set, in config.php.
+will override the UPLOADIMAGES\_DIR value, if set, in config.php. The directory must be writable by the web server.
 
 Note that KCFinder will create two subdirectories within the specified directory to store the full-size and thumbnail images.
 The sub-directory for full-size images can be configured on the Settings page. The default value of `image` is fine for a new installation and for upgrading from FCKEditor.
 
+If the UPLOADIMAGES\_DIR value in config.php is set to `false` then kcFinder will be disabled and image uploading will not be possible.
 ## Custom configuration ##
 Other settings for the editor can be placed in a custom configuration file. This file needs to be within the web root and its
 location specified on the Settings page.
@@ -83,5 +84,6 @@ the upload directory on the Settings page.
 ## Version history ##
 
     version     Description
+    2013-04-27  Fix for GitHub issue 2
     2013-04-22  Fixes for GitHub issues 1 and 3
     2013-04-11  Initial version for phplist 2.11.x releases
