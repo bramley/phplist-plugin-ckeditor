@@ -24,6 +24,11 @@ class CKEditorPlugin extends phplistPlugin
     const VERSION_FILE = 'version.txt';
     const CODE_DIR = '/CKEditorPlugin/';
     /*
+     *  Private variables
+     */
+    private $kcEnabled;
+
+    /*
      *  Inherited variables
      */
     public $name = 'CKEditor plugin';
@@ -33,6 +38,7 @@ class CKEditorPlugin extends phplistPlugin
 
     function __construct()
     {
+        $this->kcEnabled = !(defined('UPLOADIMAGES_DIR') && UPLOADIMAGES_DIR === false);
         $this->coderoot = dirname(__FILE__) . self::CODE_DIR;
         $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
             ? file_get_contents($f)
@@ -69,29 +75,34 @@ class CKEditorPlugin extends phplistPlugin
               'type' => 'text',
               'allowempty' => 1,
               'category'=> 'composition',
-            ),
-            'kcfinder_path' => array (
-              'value' =>  PLUGIN_ROOTDIR . self::CODE_DIR . 'kcfinder',
-              'description' => 'path to KCFinder',
-              'type' => 'text',
-              'allowempty' => 0,
-              'category'=> 'composition',
-            ),
-            'kcfinder_upload_path' => array (
-              'value' => '',
-              'description' => 'path to file upload directory (overrides UPLOADIMAGES_DIR in config.php)',
-              'type' => 'text',
-              'allowempty' => 1,
-              'category'=> 'composition',
-            ),
-            'kcfinder_image_directory' => array (
-              'value' => 'image',
-              'description' => 'name of the image subdirectory of the file upload directory',
-              'type' => 'text',
-              'allowempty' => 0,
-              'category'=> 'composition',
-            ),
+            )
         );
+
+        if ($this->kcEnabled) {
+            $this->settings += array(
+                'kcfinder_path' => array (
+                  'value' =>  PLUGIN_ROOTDIR . self::CODE_DIR . 'kcfinder',
+                  'description' => 'path to KCFinder',
+                  'type' => 'text',
+                  'allowempty' => 0,
+                  'category'=> 'composition',
+                ),
+                'kcfinder_upload_path' => array (
+                  'value' => '',
+                  'description' => 'path to file upload directory (overrides UPLOADIMAGES_DIR in config.php)',
+                  'type' => 'text',
+                  'allowempty' => 1,
+                  'category'=> 'composition',
+                ),
+                'kcfinder_image_directory' => array (
+                  'value' => 'image',
+                  'description' => 'name of the image subdirectory of the file upload directory',
+                  'type' => 'text',
+                  'allowempty' => 0,
+                  'category'=> 'composition',
+                ),
+            );
+        }
         parent::__construct();
     }
 
@@ -102,20 +113,30 @@ class CKEditorPlugin extends phplistPlugin
   
     function editor($fieldname, $content)
     {
-        $kcFinderConfig = array(
-            'disabled' => false
-        );
-        $upload = getConfig('kcfinder_upload_path');
+        if ($this->kcEnabled) {
+            $_SESSION['KCFINDER'] = array(
+                'disabled' => false
+            );
+            $upload = getConfig('kcfinder_upload_path');
 
-        if ($upload != '' || (defined('UPLOADIMAGES_DIR') && (($upload = UPLOADIMAGES_DIR) != ''))) {
-            $upload = ltrim($upload, '/');
-            $kcFinderConfig['uploadURL'] = "/$upload";
-        }
-        $_SESSION['KCFINDER'] = $kcFinderConfig;
-
+            if ($upload != '' || (defined('UPLOADIMAGES_DIR') && (($upload = UPLOADIMAGES_DIR) != ''))) {
+                $upload = ltrim($upload, '/');
+                $_SESSION['KCFINDER']['uploadURL'] = "/$upload";
+            }
+            $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
+            $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
+            $kcBrowserUrls = <<<END
+    filebrowserBrowseUrl: '$kcPath/browse.php?type=files',
+    filebrowserImageBrowseUrl: '$kcPath/browse.php?type=$kcImageDir',
+    filebrowserFlashBrowseUrl: '$kcPath/browse.php?type=flash',
+    filebrowserUploadUrl: '$kcPath/upload.php?type=files',
+    filebrowserImageUploadUrl: '$kcPath/upload.php?type=$kcImageDir',
+    filebrowserFlashUploadUrl: '$kcPath/upload.php?type=flash',
+END;
+       } else {
+            $kcBrowserUrls = '';
+       }
         $content = htmlspecialchars($content);
-        $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
-        $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
         $path = htmlspecialchars(rtrim(getConfig('ckeditor_path'), '/'));
         $ckConfigPath = htmlspecialchars(rtrim(getConfig('ckeditor_config_path'), '/'));
         $customConfig = $ckConfigPath ? "customConfig: '$ckConfigPath'," : '';
@@ -133,14 +154,9 @@ class CKEditorPlugin extends phplistPlugin
 <script>
 CKEDITOR.replace('$fieldname', {
     $customConfig
+    $kcBrowserUrls
     width: $width,
-    height: $height,
-    filebrowserBrowseUrl: '$kcPath/browse.php?type=files',
-    filebrowserImageBrowseUrl: '$kcPath/browse.php?type=$kcImageDir',
-    filebrowserFlashBrowseUrl: '$kcPath/browse.php?type=flash',
-    filebrowserUploadUrl: '$kcPath/upload.php?type=files',
-    filebrowserImageUploadUrl: '$kcPath/upload.php?type=$kcImageDir',
-    filebrowserFlashUploadUrl: '$kcPath/upload.php?type=flash'
+    height: $height
 });
 </script>
 END;
