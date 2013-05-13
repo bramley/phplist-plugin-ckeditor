@@ -34,6 +34,7 @@ class CKEditorPlugin extends phplistPlugin
     public $name = 'CKEditor plugin';
     public $editorProvider = true;
     public $authors = 'Duncan Cameron';
+    public $description = 'Provides the CKEditor for editing messages and templates.';
     public $enabled = 1;
 
     function __construct()
