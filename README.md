@@ -45,23 +45,24 @@ Similarly, if you already use CKEditor on your web site then you can use that ve
 ## Configuration ##
 The width and height of the editor window can be specified on the Settings page.
 
-The location of a directory where KCFinder can store uploaded images can be specified on the Settings page. The location entered here 
-will override the UPLOADIMAGES\_DIR value, if set, in config.php. The directory must be writable by the web server.
+The UPLOADIMAGES\_DIR value in config.php must be set to the location of a directory where KCFinder can store uploaded images.
+The directory must be writable by the web server. Note that the value is relative to the web root and must not contain a leading '/'.
 
-Note that KCFinder will create two subdirectories within the specified directory to store the full-size and thumbnail images.
-The sub-directory for full-size images can be configured on the Settings page. The default value of `image` is fine for a new installation and for upgrading from FCKEditor.
+KCFinder will create two subdirectories within the specified directory to store the full-size and thumbnail images.
+The name of the sub-directory for full-size images can be configured on the Settings page. The default value of `image` is fine for a new installation and for upgrading from FCKEditor.
 
 If the UPLOADIMAGES\_DIR value in config.php is set to `false` then kcFinder will be disabled and image uploading will not be possible.
 ## Custom configuration ##
 Other settings for the editor can be placed in a custom configuration file. This file needs to be within the web root and its
-location specified on the Settings page.
-A sample custom configuration file is provided which can be used as the basis for your own settings.
+location specified on the Settings page. A sample custom configuration file `CKEditorPlugin/sample.ckconfig.js` is provided which can be used as the basis for your own settings.
 
 See <http://docs.ckeditor.com/#!/api/CKEDITOR.config> for how to specify configuration settings.
 ## Styles ##
 
 Style definitions can be specified in the custom configuration file, and they will then appear in the Styles drop-down list when editing a message.
-Additionally, a CSS stylesheet file can be parsed to provide the style definitions.
+Additionally, a CSS stylesheet file can be parsed to provide the style definitions. The sample custom configuration file has an example of how to
+define styles.
+
 See <http://docs.ckeditor.com/#!/guide/dev_styles>
 
 ## Custom build of CKEditor ##
@@ -75,15 +76,15 @@ You should then install the new CKEditor on your web site and specify the path t
 In phplist 2.10 the FCKIMAGES_DIR value in config.php defines the directory into which images will be uploaded.
 The value is relative to the phplist root directory.
 
-In phplist 2.11 and later a different value, UPLOADIMAGES_DIR, is used to define the directory. This value is relative to the web root,
-not to the phplist root directory.
-
-To continue using the same upload directory you must either set UPLOADIMAGES\_DIR correctly or override UPLOADIMAGES\_DIR by setting
-the upload directory on the Settings page.
+In phplist 3.x a different value, UPLOADIMAGES\_DIR, is used to define the directory. This value is relative to the web root,
+not to the phplist root directory. To continue using the same upload directory you must set UPLOADIMAGES\_DIR correctly.
+So, for example, if the existing image upload directory is /lists/uploadimages then the FCKIMAGES\_DIR would be `uploadimages` but the 
+value for UPLOADIMAGES\_DIR would be `lists/uploadimages`.
 
 ## Version history ##
 
     version     Description
+    2013-09-01  Removed setting for upload files, now UPLOADIMAGES_DIR must be specified
     2013-04-27  Fix for GitHub issue 2
     2013-04-22  Fixes for GitHub issues 1 and 3
     2013-04-11  Initial version for phplist 2.11.x releases

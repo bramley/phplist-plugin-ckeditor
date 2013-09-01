@@ -1,3 +1,8 @@
+version 2013-09-01
+      GitHub issue #6, removed configuration setting for upload directory
+      Added description for plugins page
+      Added sample configuration file
+
 version 2013-04-27
       GitHub issue #2, Add configuration option to disable KCFinder
 

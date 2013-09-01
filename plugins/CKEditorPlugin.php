@@ -39,7 +39,7 @@ class CKEditorPlugin extends phplistPlugin
 
     function __construct()
     {
-        $this->kcEnabled = !(defined('UPLOADIMAGES_DIR') && UPLOADIMAGES_DIR === false);
+        $this->kcEnabled = defined('UPLOADIMAGES_DIR') && UPLOADIMAGES_DIR !== false;
         $this->coderoot = dirname(__FILE__) . self::CODE_DIR;
         $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
             ? file_get_contents($f)
@@ -88,13 +88,6 @@ class CKEditorPlugin extends phplistPlugin
                   'allowempty' => 0,
                   'category'=> 'composition',
                 ),
-                'kcfinder_upload_path' => array (
-                  'value' => '',
-                  'description' => 'path to file upload directory (overrides UPLOADIMAGES_DIR in config.php)',
-                  'type' => 'text',
-                  'allowempty' => 1,
-                  'category'=> 'composition',
-                ),
                 'kcfinder_image_directory' => array (
                   'value' => 'image',
                   'description' => 'name of the image subdirectory of the file upload directory',
@@ -116,14 +109,9 @@ class CKEditorPlugin extends phplistPlugin
     {
         if ($this->kcEnabled) {
             $_SESSION['KCFINDER'] = array(
-                'disabled' => false
+                'disabled' => false,
+                'uploadURL' => '/' . UPLOADIMAGES_DIR
             );
-            $upload = getConfig('kcfinder_upload_path');
-
-            if ($upload != '' || (defined('UPLOADIMAGES_DIR') && (($upload = UPLOADIMAGES_DIR) != ''))) {
-                $upload = ltrim($upload, '/');
-                $_SESSION['KCFINDER']['uploadURL'] = "/$upload";
-            }
             $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
             $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
             $kcBrowserUrls = <<<END
