@@ -45,6 +45,20 @@ class CKEditorPlugin extends phplistPlugin
             ? file_get_contents($f)
             : '';
         $this->settings = array(
+            'ckeditor_path' => array (
+              'value' => PLUGIN_ROOTDIR . self::CODE_DIR . 'ckeditor',
+              'description' => 'Path to CKeditor',
+              'type' => 'text',
+              'allowempty' => 0,
+              'category'=> 'CKEditor',
+            ),
+            'ckeditor_config_path' => array (
+              'value' => '',
+              'description' => 'Path to CKeditor custom configuration file',
+              'type' => 'text',
+              'allowempty' => 1,
+              'category'=> 'CKEditor',
+            ),
             'ckeditor_width' => array (
               'value' => 600,
               'description' => 'Width in px of CKeditor Area',
@@ -52,7 +66,7 @@ class CKEditorPlugin extends phplistPlugin
               'allowempty' => 0,
               'min' => 100,
               'max' => 800,
-              'category'=> 'composition',
+              'category'=> 'CKEditor',
             ),
             'ckeditor_height' => array (
               'value' => 600,
@@ -61,21 +75,7 @@ class CKEditorPlugin extends phplistPlugin
               'allowempty' => 0,
               'min' => 100,
               'max' => 800,
-              'category'=> 'composition',
-            ),
-            'ckeditor_path' => array (
-              'value' => PLUGIN_ROOTDIR . self::CODE_DIR . 'ckeditor',
-              'description' => 'path to CKeditor',
-              'type' => 'text',
-              'allowempty' => 0,
-              'category'=> 'composition',
-            ),
-            'ckeditor_config_path' => array (
-              'value' => '',
-              'description' => 'path to CKeditor custom configuration file',
-              'type' => 'text',
-              'allowempty' => 1,
-              'category'=> 'composition',
+              'category'=> 'CKEditor',
             )
         );
 
@@ -83,17 +83,17 @@ class CKEditorPlugin extends phplistPlugin
             $this->settings += array(
                 'kcfinder_path' => array (
                   'value' =>  PLUGIN_ROOTDIR . self::CODE_DIR . 'kcfinder',
-                  'description' => 'path to KCFinder',
+                  'description' => 'Path to KCFinder',
                   'type' => 'text',
                   'allowempty' => 0,
-                  'category'=> 'composition',
+                  'category'=> 'CKEditor',
                 ),
                 'kcfinder_image_directory' => array (
                   'value' => 'image',
-                  'description' => 'name of the image subdirectory of the file upload directory',
+                  'description' => 'Name of the image subdirectory of the file upload directory',
                   'type' => 'text',
                   'allowempty' => 0,
-                  'category'=> 'composition',
+                  'category'=> 'CKEditor',
                 ),
             );
         }
