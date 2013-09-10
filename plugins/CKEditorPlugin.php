@@ -37,7 +37,7 @@ class CKEditorPlugin extends phplistPlugin
     public $description = 'Provides the CKEditor for editing messages and templates.';
     public $enabled = 1;
 
-    function __construct()
+    public function __construct()
     {
         $this->kcEnabled = defined('UPLOADIMAGES_DIR') && UPLOADIMAGES_DIR !== false;
         $this->coderoot = dirname(__FILE__) . self::CODE_DIR;
@@ -100,12 +100,12 @@ class CKEditorPlugin extends phplistPlugin
         parent::__construct();
     }
 
-    function adminmenu()
+    public function adminmenu()
     {
         return array();
     }
   
-    function editor($fieldname, $content)
+    public function editor($fieldname, $content)
     {
         if ($this->kcEnabled) {
             $_SESSION['KCFINDER'] = array(
