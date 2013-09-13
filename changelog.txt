@@ -1,3 +1,6 @@
+version 2013-09-13
+      Moved settings into their own CKEditor category
+
 version 2013-09-01
       GitHub issue #6, removed configuration setting for upload directory
       Added description for plugins page

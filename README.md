@@ -67,9 +67,9 @@ See <http://docs.ckeditor.com/#!/guide/dev_styles>
 
 ## Custom build of CKEditor ##
 
-You can expand the functionality of CKEditor by adding plugins and creating a custom build, see <http://ckeditor.com/addons/plugins/all>.
+The plugin provides the Standard build of CKEditor. You can use the Basic or Full builds instead, or add plugins to create a custom build, see <http://ckeditor.com/download>.
 
-You should then install the new CKEditor on your web site and specify the path to the directory on the Settings page.
+You should then install the new CKEditor on your web site and specify the path to the directory on the Settings page. Use a new directory rather than overwriting the version in the plugin's directory, so that it will not be affected when you upgrade the plugin.
 
 ## Upgrade from phplist 2.10.x with FCKEditor ##
 
@@ -84,6 +84,7 @@ value for UPLOADIMAGES\_DIR would be `lists/uploadimages`.
 ## Version history ##
 
     version     Description
+    2013-09-13  Moved settings into their own CKEditor category
     2013-09-01  Removed setting for upload files, now UPLOADIMAGES_DIR must be specified
     2013-04-27  Fix for GitHub issue 2
     2013-04-22  Fixes for GitHub issues 1 and 3
