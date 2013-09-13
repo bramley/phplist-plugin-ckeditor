@@ -36,7 +36,7 @@ If you have the default plugin location then the plugin will use the correct pat
 But if your plugin directory is outside of the web root then you must move or copy the `ckeditor` and `kcfinder` directories from
 the plugin's directory to somewhere within the web root.  
 Then use the Settings page (menu Config > Settings) to specify the path to each directory.
-In the Composition Settings section enter
+In the `CKEditor settings` section enter
 
 * the path to CKeditor
 * the path to KCFinder 
