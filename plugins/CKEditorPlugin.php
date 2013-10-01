@@ -104,9 +104,18 @@ class CKEditorPlugin extends phplistPlugin
     {
         return array();
     }
-  
+
     public function editor($fieldname, $content)
     {
+        $width = getConfig('ckeditor_width');
+        $height = getConfig('ckeditor_height');
+        return $this->createEditor($fieldname, $content, $width, $height);
+    }
+
+    public function createEditor($fieldname, $content, $width = null, $height = null, $toolbar = null)
+    {
+        $settings = array();
+
         if ($this->kcEnabled) {
             $_SESSION['KCFINDER'] = array(
                 'disabled' => false,
@@ -114,38 +123,41 @@ class CKEditorPlugin extends phplistPlugin
             );
             $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
             $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
-            $kcBrowserUrls = <<<END
-    filebrowserBrowseUrl: '$kcPath/browse.php?type=files',
-    filebrowserImageBrowseUrl: '$kcPath/browse.php?type=$kcImageDir',
-    filebrowserFlashBrowseUrl: '$kcPath/browse.php?type=flash',
-    filebrowserUploadUrl: '$kcPath/upload.php?type=files',
-    filebrowserImageUploadUrl: '$kcPath/upload.php?type=$kcImageDir',
-    filebrowserFlashUploadUrl: '$kcPath/upload.php?type=flash',
+            $settings[] = <<<END
+filebrowserBrowseUrl: '$kcPath/browse.php?type=files',
+filebrowserImageBrowseUrl: '$kcPath/browse.php?type=$kcImageDir',
+filebrowserFlashBrowseUrl: '$kcPath/browse.php?type=flash',
+filebrowserUploadUrl: '$kcPath/upload.php?type=files',
+filebrowserImageUploadUrl: '$kcPath/upload.php?type=$kcImageDir',
+filebrowserFlashUploadUrl: '$kcPath/upload.php?type=flash'
 END;
-       } else {
-            $kcBrowserUrls = '';
        }
         $content = htmlspecialchars($content);
         $path = htmlspecialchars(rtrim(getConfig('ckeditor_path'), '/'));
         $ckConfigPath = htmlspecialchars(rtrim(getConfig('ckeditor_config_path'), '/'));
-        $customConfig = $ckConfigPath ? "customConfig: '$ckConfigPath'," : '';
 
-        if ($fieldname == 'footer') {
-            $width = getConfig('ckeditor_width');
-            $height = 100;
-        } else {
-            $width = getConfig('ckeditor_width');
-            $height = getConfig('ckeditor_height');
+        if ($ckConfigPath) {
+            $settings[] = "customConfig: '$ckConfigPath'";
         }
+
+        if ($width) {
+            $settings[] = "width: $width";
+        }
+
+        if ($height) {
+            $settings[] = "height: $height";
+        }
+
+        if ($toolbar) {
+            $settings[] = "toolbar: '$toolbar'";
+        }
+        $configSettings = implode(",\n", $settings);
         $html = <<<END
 <script type="text/javascript" src="$path/ckeditor.js"></script>
 <textarea name="$fieldname">$content</textarea>
 <script>
 CKEDITOR.replace('$fieldname', {
-    $customConfig
-    $kcBrowserUrls
-    width: $width,
-    height: $height
+    $configSettings
 });
 </script>
 END;
