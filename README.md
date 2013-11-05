@@ -81,6 +81,12 @@ not to the phplist root directory. To continue using the same upload directory y
 So, for example, if the existing image upload directory is /lists/uploadimages then the FCKIMAGES\_DIR would be `uploadimages` but the 
 value for UPLOADIMAGES\_DIR would be `lists/uploadimages`.
 
+## Donation ##
+
+This plugin is free but if you install and find it useful then a donation to support further development is greatly appreciated.
+
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W5GLX53WDM7T4)
+
 ## Version history ##
 
     version     Description
