@@ -28,6 +28,10 @@ This should contain
 * the file CKEditorPlugin.php
 * the directory CKEditorPlugin
 
+### Enable the plugin ###
+Click the small orange icon to enable the plugin. Note that only one editor should be enabled, otherwise phplist will choose the first
+that it finds.
+
 ### Location of the CKEditor and KCFinder directories ###
 The CKEditor and KCFinder directories must be within the web root. 
 
