@@ -37,6 +37,79 @@ class CKEditorPlugin extends phplistPlugin
     public $description = 'Provides the CKEditor for editing messages and templates.';
     public $enabled = 1;
 
+    private function kcFinderScript($function)
+    {
+    //  see http://kcfinder.sunhater.com/docs/integrate Custom Applications
+        $kcPath = rtrim(getConfig('kcfinder_path'), '/');
+        $kcImageDir = getConfig('kcfinder_image_directory');
+        $kcUrl = htmlspecialchars("$kcPath/browse.php?type=$kcImageDir");
+        $html = <<<END
+<script type='text/javascript'>
+$function = function(inputId, imageId) {
+    window.KCFinder = {};
+    window.KCFinder.callBack = function(url) {
+        document.getElementById(inputId).value = url;
+        document.getElementById(imageId).src = url;
+        window.KCFinder = null;
+    };
+    window.open('$kcUrl', inputId, 'width=600,height=500');
+}
+</script>
+END;
+        return $html;
+    }
+
+    private function editorScript($fieldname, $width, $height, $toolbar)
+    {
+        $settings = array();
+
+        if ($this->kcEnabled) {
+            $_SESSION['KCFINDER'] = array(
+                'disabled' => false,
+                'uploadURL' => '/' . UPLOADIMAGES_DIR
+            );
+            $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
+            $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
+            $settings[] = <<<END
+filebrowserBrowseUrl: '$kcPath/browse.php?type=files',
+filebrowserImageBrowseUrl: '$kcPath/browse.php?type=$kcImageDir',
+filebrowserFlashBrowseUrl: '$kcPath/browse.php?type=flash',
+filebrowserUploadUrl: '$kcPath/upload.php?type=files',
+filebrowserImageUploadUrl: '$kcPath/upload.php?type=$kcImageDir',
+filebrowserFlashUploadUrl: '$kcPath/upload.php?type=flash'
+END;
+        }
+
+        $path = htmlspecialchars(rtrim(getConfig('ckeditor_path'), '/'));
+        $ckConfigPath = htmlspecialchars(rtrim(getConfig('ckeditor_config_path'), '/'));
+
+        if ($ckConfigPath) {
+            $settings[] = "customConfig: '$ckConfigPath'";
+        }
+
+        if ($width) {
+            $settings[] = "width: $width";
+        }
+
+        if ($height) {
+            $settings[] = "height: $height";
+        }
+
+        if ($toolbar) {
+            $settings[] = "toolbar: '$toolbar'";
+        }
+        $configSettings = implode(",\n", $settings);
+        $html = <<<END
+<script type="text/javascript" src="$path/ckeditor.js"></script>
+<script>
+CKEDITOR.replace('$fieldname', {
+    $configSettings
+});
+</script>
+END;
+        return $html;
+    }
+
     public function __construct()
     {
         $this->kcEnabled = defined('UPLOADIMAGES_DIR') && UPLOADIMAGES_DIR !== false;
@@ -114,53 +187,25 @@ class CKEditorPlugin extends phplistPlugin
 
     public function createEditor($fieldname, $content, $width = null, $height = null, $toolbar = null)
     {
-        $settings = array();
-
-        if ($this->kcEnabled) {
-            $_SESSION['KCFINDER'] = array(
-                'disabled' => false,
-                'uploadURL' => '/' . UPLOADIMAGES_DIR
-            );
-            $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
-            $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
-            $settings[] = <<<END
-filebrowserBrowseUrl: '$kcPath/browse.php?type=files',
-filebrowserImageBrowseUrl: '$kcPath/browse.php?type=$kcImageDir',
-filebrowserFlashBrowseUrl: '$kcPath/browse.php?type=flash',
-filebrowserUploadUrl: '$kcPath/upload.php?type=files',
-filebrowserImageUploadUrl: '$kcPath/upload.php?type=$kcImageDir',
-filebrowserFlashUploadUrl: '$kcPath/upload.php?type=flash'
-END;
-       }
+        $fieldname = htmlspecialchars($fieldname);
         $content = htmlspecialchars($content);
-        $path = htmlspecialchars(rtrim(getConfig('ckeditor_path'), '/'));
-        $ckConfigPath = htmlspecialchars(rtrim(getConfig('ckeditor_config_path'), '/'));
-
-        if ($ckConfigPath) {
-            $settings[] = "customConfig: '$ckConfigPath'";
-        }
-
-        if ($width) {
-            $settings[] = "width: $width";
-        }
-
-        if ($height) {
-            $settings[] = "height: $height";
-        }
-
-        if ($toolbar) {
-            $settings[] = "toolbar: '$toolbar'";
-        }
-        $configSettings = implode(",\n", $settings);
         $html = <<<END
-<script type="text/javascript" src="$path/ckeditor.js"></script>
 <textarea name="$fieldname">$content</textarea>
-<script>
-CKEDITOR.replace('$fieldname', {
-    $configSettings
-});
-</script>
 END;
+        $html .= $this->editorScript($fieldname, $width, $height, $toolbar);
+        return $html;
+    }
+
+    public function createFileManager($function)
+    {
+        static $firstTime = true;
+
+        if ($firstTime) {
+            $firstTime = false;
+            $html = $this->kcFinderScript($function);
+        } else {
+            $html = '';
+        }
         return $html;
     }
 }
