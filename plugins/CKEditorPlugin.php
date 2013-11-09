@@ -45,14 +45,13 @@ class CKEditorPlugin extends phplistPlugin
         $kcUrl = htmlspecialchars("$kcPath/browse.php?type=$kcImageDir");
         $html = <<<END
 <script type='text/javascript'>
-$function = function(inputId, imageId) {
+$function = function(callback) {
     window.KCFinder = {};
     window.KCFinder.callBack = function(url) {
-        document.getElementById(inputId).value = url;
-        document.getElementById(imageId).src = url;
+        callback(url);
         window.KCFinder = null;
     };
-    window.open('$kcUrl', inputId, 'width=600,height=500');
+    window.open('$kcUrl', '', 'width=600,height=500');
 }
 </script>
 END;
@@ -196,7 +195,7 @@ END;
         return $html;
     }
 
-    public function createFileManager($function)
+    public function createImageBrowser($function)
     {
         static $firstTime = true;
 
