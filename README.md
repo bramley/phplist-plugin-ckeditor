@@ -79,7 +79,7 @@ See <http://docs.ckeditor.com/#!/guide/dev_styles>
 
 The plugin provides the Standard build of CKEditor. You can use the Basic or Full builds instead, or add plugins to create a custom build, see <http://ckeditor.com/download>.
 
-You should then install the new CKEditor on your web site and specify the path to the directory on the Settings page. Use a new directory rather than overwriting the version in the plugin's directory, so that it will not be affected when you upgrade the plugin.
+To install the build, expand the zip file, copy the ckeditor directory to your web site, and specify the path to the directory on the Settings page. It is recommended to use a new directory rather than overwriting the version in the plugin's directory, so that it will not be affected when you upgrade the plugin.
 
 ## Upgrade from phplist 2.10.x with FCKEditor ##
 
