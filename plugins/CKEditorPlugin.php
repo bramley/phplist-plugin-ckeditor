@@ -60,12 +60,14 @@ END;
 
     private function editorScript($fieldname, $width, $height, $toolbar)
     {
+        global $website, $public_scheme;
+
         $settings = array();
 
         if ($this->kcEnabled) {
             $_SESSION['KCFINDER'] = array(
                 'disabled' => false,
-                'uploadURL' => '/' . UPLOADIMAGES_DIR
+                'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, UPLOADIMAGES_DIR)
             );
             $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
             $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
