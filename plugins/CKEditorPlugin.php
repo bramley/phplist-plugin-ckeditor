@@ -67,7 +67,7 @@ END;
         if ($this->kcEnabled) {
             $_SESSION['KCFINDER'] = array(
                 'disabled' => false,
-                'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, UPLOADIMAGES_DIR)
+                'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/'))
             );
             $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
             $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
