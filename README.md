@@ -100,6 +100,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2013-12-10  Correct example for allowed content
     2013-11-26  Use full URL in links
     2013-09-13  Moved settings into their own CKEditor category
     2013-09-01  Removed setting for upload files, now UPLOADIMAGES_DIR must be specified

@@ -1,3 +1,6 @@
+version 2013-12-10
+      Corrected example for allowed content
+
 version 2013-11-26
       Use full URL in links
 
