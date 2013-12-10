@@ -65,5 +65,5 @@ CKEDITOR.editorConfig = function( config ) {
     config.resize_enabled = true;
     config.resize_minWidth = 500;
     config.resize_dir = 'both';
+    config.allowedContent = true;
 };
-CKEDITOR.allowedContent = true;
