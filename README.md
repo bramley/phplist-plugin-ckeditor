@@ -62,6 +62,9 @@ KCFinder will create two subdirectories within the specified directory to store 
 The name of the sub-directory for full-size images can be configured on the Settings page. The default value of `image` is fine for a new installation and for upgrading from FCKEditor.
 
 If the UPLOADIMAGES\_DIR value in config.php is set to `false` then kcFinder will be disabled and image uploading will not be possible.
+
+You can select to generate a full HTML page when editing a message template. The template will then include `<html>`, `<head>` and `<body>`
+elements.
 ## Custom configuration ##
 Other settings for the editor can be placed in a custom configuration file. This file needs to be within the web root and its
 location specified on the Settings page. A sample custom configuration file `CKEditorPlugin/sample.ckconfig.js` is provided which can be used as the basis for your own settings.
@@ -100,6 +103,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2013-12-22  Allow full HTML page editing for templates
     2013-12-10  Correct example for allowed content
     2013-11-26  Use full URL in links
     2013-09-13  Moved settings into their own CKEditor category

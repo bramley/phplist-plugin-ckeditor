@@ -1,3 +1,7 @@
+version 2013-12-22
+      Allow full HTML page editing for templates
+      Added allowContent to default configuration
+
 version 2013-12-10
       Corrected example for allowed content
 
