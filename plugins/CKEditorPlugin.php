@@ -63,6 +63,11 @@ END;
         global $website, $public_scheme;
 
         $settings = array();
+        $settings[] = 'allowedContent: true';
+
+        if ($fieldname == 'template' && getConfig('ckeditor_fulltemplate')) {
+            $settings[] = 'fullPage: true';
+        }
 
         if ($this->kcEnabled) {
             $_SESSION['KCFINDER'] = array(
@@ -104,7 +109,7 @@ END;
 <script type="text/javascript" src="$path/ckeditor.js"></script>
 <script>
 CKEDITOR.replace('$fieldname', {
-    $configSettings
+$configSettings
 });
 </script>
 END;
@@ -149,6 +154,13 @@ END;
               'allowempty' => 0,
               'min' => 100,
               'max' => 800,
+              'category'=> 'CKEditor',
+            ),
+            'ckeditor_fulltemplate' => array (
+              'description' => 'Allow templates to be edited as full HTML pages',
+              'type' => 'boolean',
+              'value' => '0',
+              'allowempty' => false,
               'category'=> 'CKEditor',
             )
         );
