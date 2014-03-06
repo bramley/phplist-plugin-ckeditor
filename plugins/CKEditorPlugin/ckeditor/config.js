@@ -4,7 +4,6 @@
  */
 
 CKEDITOR.editorConfig = function (config) {
-
     config.title = false;
     config.browserContextMenuOnCtrl = false;
     CKEDITOR.disableAutoInline = true;
@@ -23,7 +22,6 @@ CKEDITOR.editorConfig = function (config) {
 
 // HTML formattings
 CKEDITOR.on('instanceReady', function (ev) {
-
     var element = ev.editor.element;
     var form = element.$.form && new CKEDITOR.dom.element(element.$.form);
     if (form) {
@@ -39,7 +37,6 @@ CKEDITOR.on('instanceReady', function (ev) {
 
 // HTML 4 style
 function SetHTMLFilterRules(htmlFilter) {
-
     // Output properties as attributes, not styles.
     htmlFilter.addRules({
         elements: {
