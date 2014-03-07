@@ -1,7 +1,7 @@
 # CKEditor Plugin #
 
 ## Description ##
-This plugin provides CKEditor 4.1 for editing messages and templates within phplist. 
+This plugin provides CKEditor 4.3 for editing messages and templates within phplist. 
 
 It also integrates the KCFinder file manager to provide file upload and selection.
 ## Compatibility ###
@@ -78,11 +78,14 @@ define styles.
 
 See <http://docs.ckeditor.com/#!/guide/dev_styles>
 
-## Custom build of CKEditor ##
+## Upgrade CKEditor ##
 
-The plugin provides the Standard build of CKEditor. You can use the Basic or Full builds instead, or add plugins to create a custom build, see <http://ckeditor.com/download>.
+The plugin includes CKEditor 4.3.3 standard build but will not automatically upgrade to a new release.
+You can download a later release of CKEditor or the Basic or Full builds from <http://ckeditor.com/download>.
 
-To install the build, expand the zip file, copy the ckeditor directory to your web site, and specify the path to the directory on the Settings page. It is recommended to use a new directory rather than overwriting the version in the plugin's directory, so that it will not be affected when you upgrade the plugin.
+To install the build, expand the zip file, copy the ckeditor directory to your web site, and specify the path to the directory
+on the Settings page. It is recommended to use a new directory rather than overwriting the CKEditor version in the plugin's directory,
+so that it will not be affected if you upgrade the plugin.
 
 ## Upgrade from phplist 2.10.x with FCKEditor ##
 
@@ -103,6 +106,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-03-07  Upgraded to CKEditor 4.3.3
     2013-12-22  Allow full HTML page editing for templates
     2013-12-10  Correct example for allowed content
     2013-11-26  Use full URL in links

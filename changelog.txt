@@ -1,3 +1,7 @@
+version 2014-03-07
+      Removed CKEditor 4.1.1
+      Added CKEditor 4.3.3 standard build
+
 version 2013-12-22
       Allow full HTML page editing for templates
       Added allowContent to default configuration
