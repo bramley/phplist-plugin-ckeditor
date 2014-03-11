@@ -39,17 +39,18 @@ Click the small orange icon to enable the plugin. Note that only one editor shou
 that it finds.
 
 ### Location of the CKEditor and KCFinder directories ###
-The CKEditor and KCFinder directories must be within the web root. 
+The CKEditor and KCFinder directories must be within the web root.
+If you have the default plugin location, `admin/plugins`, then the plugin will use the correct paths automatically.
 
-If you have the default plugin location then the plugin will use the correct paths automatically.
+If your plugin directory is outside of the web root then you must move or copy the `ckeditor` and `kcfinder` directories from the plugin's
+directory to somewhere within the web root.
 
-But if your plugin directory is outside of the web root then you must move or copy the `ckeditor` and `kcfinder` directories from
-the plugin's directory to somewhere within the web root.  
 Then use the Settings page (menu Config > Settings) to specify the path to each directory.
-In the `CKEditor settings` section enter
 
 * the path to CKeditor
 * the path to KCFinder 
+
+Each path should be from the web root, such as `/ckeditor`, not the filesystem path.
 
 Similarly, if you already use CKEditor on your web site then you can use that version by specifying the path on the Settings page.
 ## Configuration ##
