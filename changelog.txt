@@ -1,3 +1,6 @@
+version 2014-04-30
+      Display warning when image directory is not writeable
+
 version 2014-03-07
       Removed CKEditor 4.1.1
       Added CKEditor 4.3.3 standard build

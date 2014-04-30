@@ -107,6 +107,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-04-30  Display warning when image directory is not writeable
     2014-03-07  Upgraded to CKEditor 4.3.3
     2013-12-22  Allow full HTML page editing for templates
     2013-12-10  Correct example for allowed content

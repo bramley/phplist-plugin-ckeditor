@@ -62,6 +62,7 @@ END;
     {
         global $website, $public_scheme;
 
+        $html = '';
         $settings = array();
         $settings[] = 'allowedContent: true';
 
@@ -70,13 +71,14 @@ END;
         }
 
         if ($this->kcEnabled) {
-            $_SESSION['KCFINDER'] = array(
-                'disabled' => false,
-                'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/'))
-            );
-            $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
-            $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
-            $settings[] = <<<END
+            if (is_writeable($dir = $_SERVER['DOCUMENT_ROOT'] . '/' . trim(UPLOADIMAGES_DIR, '/'))) {
+                $_SESSION['KCFINDER'] = array(
+                    'disabled' => false,
+                    'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/'))
+                );
+                $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
+                $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
+                $settings[] = <<<END
 filebrowserBrowseUrl: '$kcPath/browse.php?type=files',
 filebrowserImageBrowseUrl: '$kcPath/browse.php?type=$kcImageDir',
 filebrowserFlashBrowseUrl: '$kcPath/browse.php?type=flash',
@@ -84,6 +86,12 @@ filebrowserUploadUrl: '$kcPath/upload.php?type=files',
 filebrowserImageUploadUrl: '$kcPath/upload.php?type=$kcImageDir',
 filebrowserFlashUploadUrl: '$kcPath/upload.php?type=flash'
 END;
+            } else {
+                $html .= sprintf(
+                    '<div class="note error">Image browsing is not available because directory "%s" does not exist or is not writeable.</div>',
+                    htmlspecialchars($dir)
+                );
+            }
         }
 
         $path = htmlspecialchars(rtrim(getConfig('ckeditor_path'), '/'));
@@ -105,7 +113,7 @@ END;
             $settings[] = "toolbar: '$toolbar'";
         }
         $configSettings = implode(",\n", $settings);
-        $html = <<<END
+        $html .= <<<END
 <script type="text/javascript" src="$path/ckeditor.js"></script>
 <script>
 CKEDITOR.replace('$fieldname', {
