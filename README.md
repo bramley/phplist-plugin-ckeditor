@@ -19,8 +19,8 @@ The benefit of this is that plugins will not be affected when you upgrade phplis
 ### Install through phplist ###
 Install on the Plugins page (menu Config > Plugins) using the package URL `https://github.com/bramley/phplist-plugin-ckeditor/archive/master.zip`.
 
-There is a bug that can cause a plugin to be incompletely installed on some configurations (<https://mantis.phplist.com/view.php?id=16865>). 
-Check that these files are in the plugin directory. If not then you will need to install manually.
+In phplist releases 3.0.5 and earlier there is a bug that can cause a plugin to be incompletely installed on some configurations (<https://mantis.phplist.com/view.php?id=16865>). 
+Check that these files are in the plugin directory. If not then you will need to install manually. The bug has been fixed in release 3.0.6.
 
 * the file CKEditorPlugin.php
 * the directory CKEditorPlugin
@@ -40,19 +40,21 @@ that it finds.
 
 ### Location of the CKEditor and KCFinder directories ###
 The CKEditor and KCFinder directories must be within the web root.
-If you have the default plugin location, `admin/plugins`, then the plugin will use the correct paths automatically.
+If you have the default plugin location, `define("PLUGIN_ROOTDIR","plugins")` in config.php, then the plugin will use the correct paths automatically.
 
-If your plugin directory is outside of the web root then you must move or copy the `ckeditor` and `kcfinder` directories from the plugin's
+If you have placed the plugin directory outside of the web root then you must move or copy the `ckeditor` and `kcfinder` directories from the plugin's
 directory to somewhere within the web root.
 
 Then use the Settings page (menu Config > Settings) to specify the path to each directory.
 
-* the path to CKeditor
+* the path to CKEditor
 * the path to KCFinder 
 
 Each path should be from the web root, such as `/ckeditor`, not the filesystem path.
 
-Similarly, if you already use CKEditor on your web site then you can use that version by specifying the path on the Settings page.
+Also, if you move or rename the phplist directory or the plugin directory after installing the plugin, then you will need
+to modify the paths to CKEditor and KCFinder as they will not change automatically.
+
 ## Configuration ##
 The width and height of the editor window can be specified on the Settings page.
 
