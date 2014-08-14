@@ -60,7 +60,21 @@ END;
 
     private function editorScript($fieldname, $width, $height, $toolbar)
     {
-        global $website, $public_scheme;
+        global $website, $public_scheme, $systemroot;
+
+        $file =  rtrim(getConfig('ckeditor_path'), '/') . '/ckeditor.js';
+
+        if ($file[0] == '/') {
+            $f = $_SERVER['DOCUMENT_ROOT'] . $file;
+        } else {
+            $f = $systemroot . '/' . $file;
+        }
+        if (!is_file($f) ) {
+            return sprintf(
+                '<div class="note error">CKEditor is not available because the ckeditor file "%s" does not exist. Check your setting for the path to ckeditor.</div>',
+                $file
+            );
+        }
 
         $html = '';
         $settings = array();
