@@ -80,7 +80,14 @@ END;
         $settings = array();
         $settings[] = 'allowedContent: true';
 
-        if ($fieldname == 'template' && getConfig('ckeditor_fulltemplate')) {
+        $fullTemplate = getConfig('ckeditor_fulltemplate');
+        $fullMessage = getConfig('ckeditor_fullmessage');
+
+        if ($fieldname == 'template' && $fullTemplate) {
+            $settings[] = 'fullPage: true';
+        }
+
+        if ($fieldname == 'message' && $fullMessage) {
             $settings[] = 'fullPage: true';
         }
 
@@ -180,6 +187,13 @@ END;
             ),
             'ckeditor_fulltemplate' => array (
               'description' => 'Allow templates to be edited as full HTML pages',
+              'type' => 'boolean',
+              'value' => '1',
+              'allowempty' => false,
+              'category'=> 'CKEditor',
+            ),
+            'ckeditor_fullmessage' => array (
+              'description' => 'Allow messages to be edited as full HTML pages',
               'type' => 'boolean',
               'value' => '0',
               'allowempty' => false,

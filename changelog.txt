@@ -1,3 +1,7 @@
+version 2014-08-14
+      Verify that the ckeditor path is correct
+      Allow messages to be edited as full HTML pages
+
 version 2014-04-30
       Display warning when image directory is not writeable
 

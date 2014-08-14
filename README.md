@@ -67,7 +67,11 @@ The name of the sub-directory for full-size images can be configured on the Sett
 If the UPLOADIMAGES\_DIR value in config.php is set to `false` then kcFinder will be disabled and image uploading will not be possible.
 
 You can select to generate a full HTML page when editing a message template. The template will then include `<html>`, `<head>` and `<body>`
-elements.
+elements. This setting defaults to `Yes`.
+
+Similarly you can select to generate a full HTML page when editing a message. This is useful only when you do not use templates,
+otherwise the template and the message will both contain `<html>`, `<head>` and `<body>` elements. The default value is `No`.
+
 ## Custom configuration ##
 Other settings for the editor can be placed in a custom configuration file. This file needs to be within the web root and its
 location specified on the Settings page. A sample custom configuration file `CKEditorPlugin/sample.ckconfig.js` is provided which can be used as the basis for your own settings.
@@ -109,6 +113,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-08-14  Display warning when ckeditor path is incorrect. Allow full-page HTML for messages.
     2014-04-30  Display warning when image directory is not writeable
     2014-03-07  Upgraded to CKEditor 4.3.3
     2013-12-22  Allow full HTML page editing for templates
