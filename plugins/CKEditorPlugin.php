@@ -65,11 +65,11 @@ END;
         $file =  rtrim(getConfig('ckeditor_path'), '/') . '/ckeditor.js';
 
         if ($file[0] == '/') {
-            $f = $_SERVER['DOCUMENT_ROOT'] . $file;
+            $file = $_SERVER['DOCUMENT_ROOT'] . $file;
         } else {
-            $f = $systemroot . '/' . $file;
+            $file = $systemroot . '/' . $file;
         }
-        if (!is_file($f) ) {
+        if (!is_file($file) ) {
             return sprintf(
                 '<div class="note error">CKEditor is not available because the ckeditor file "%s" does not exist. Check your setting for the path to ckeditor.</div>',
                 $file
