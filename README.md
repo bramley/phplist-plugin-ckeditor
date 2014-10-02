@@ -56,15 +56,25 @@ Also, if you move or rename the phplist directory or the plugin directory after 
 to modify the paths to CKEditor and KCFinder as they will not change automatically.
 
 ## Configuration ##
-The width and height of the editor window can be specified on the Settings page.
 
+### config.php ###
 The UPLOADIMAGES\_DIR value in config.php must be set to the location of a directory where KCFinder can store uploaded images.
 The directory must be writable by the web server. Note that the value is relative to the web root and must not contain a leading '/'.
+
+If the UPLOADIMAGES\_DIR value in config.php is set to `false` then kcFinder will be disabled and image uploading will not be possible.
+
+### Settings page ###
+The width and height of the editor window can be specified on the Settings page.
 
 KCFinder will create two subdirectories within the specified directory to store the full-size and thumbnail images.
 The name of the sub-directory for full-size images can be configured on the Settings page. The default value of `image` is fine for a new installation and for upgrading from FCKEditor.
 
-If the UPLOADIMAGES\_DIR value in config.php is set to `false` then kcFinder will be disabled and image uploading will not be possible.
+In some web server configurations the plugin will not be able to correctly derive the file system path to the upload image directory
+from the value of UPLOADIMAGES\_DIR. The plugin will show a message similar to this
+
+`Image browsing is not available because directory "/xxx/xxx" does not exist or is not writeable.`
+
+If the file system path in the message is wrong but the value of UPLOADIMAGES_DIR is correct, then you can enter the actual file system path that should be used.
 
 You can select to generate a full HTML page when editing a message template. The template will then include `<html>`, `<head>` and `<body>`
 elements. This setting defaults to `Yes`.
@@ -113,6 +123,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-10-02  Config setting for path to image upload directory
     2014-08-14  Display warning when ckeditor path is incorrect. Allow full-page HTML for messages.
     2014-04-30  Display warning when image directory is not writeable
     2014-03-07  Upgraded to CKEditor 4.3.3

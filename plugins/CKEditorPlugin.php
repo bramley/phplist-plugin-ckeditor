@@ -65,7 +65,7 @@ END;
         $file =  rtrim(getConfig('ckeditor_path'), '/') . '/ckeditor.js';
 
         if ($file[0] == '/') {
-            $file = $_SERVER['DOCUMENT_ROOT'] . $file;
+            $file = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $file;
         } else {
             $file = $systemroot . '/' . $file;
         }
@@ -92,11 +92,24 @@ END;
         }
 
         if ($this->kcEnabled) {
-            if (is_writeable($dir = $_SERVER['DOCUMENT_ROOT'] . '/' . trim(UPLOADIMAGES_DIR, '/'))) {
-                $_SESSION['KCFINDER'] = array(
-                    'disabled' => false,
-                    'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/'))
-                );
+            $session = array(
+                'disabled' => false,
+                'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/'))
+            );
+            $kcUpload = false;
+            $kcUploadDir = getConfig('kcfinder_uploaddir');
+            
+            if ($kcUploadDir) {
+                if (is_writeable($kcUploadDir)) {
+                    $session['uploadDir'] = $kcUploadDir;
+                    $kcUpload = true;
+                }
+            } elseif (is_writeable($kcUploadDir = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/' . trim(UPLOADIMAGES_DIR, '/'))) {
+                $kcUpload = true;
+            }
+
+            if ($kcUpload) {
+                $_SESSION['KCFINDER'] = $session;
                 $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
                 $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
                 $settings[] = <<<END
@@ -110,7 +123,7 @@ END;
             } else {
                 $html .= sprintf(
                     '<div class="note error">Image browsing is not available because directory "%s" does not exist or is not writeable.</div>',
-                    htmlspecialchars($dir)
+                    htmlspecialchars($kcUploadDir)
                 );
             }
         }
@@ -208,6 +221,13 @@ END;
                   'description' => 'Path to KCFinder',
                   'type' => 'text',
                   'allowempty' => 0,
+                  'category'=> 'CKEditor',
+                ),
+                'kcfinder_uploaddir' => array (
+                  'value' => '',
+                  'description' => 'File system path to the upload image directory. Usually leave this emtpy.',
+                  'type' => 'text',
+                  'allowempty' => 1,
                   'category'=> 'CKEditor',
                 ),
                 'kcfinder_image_directory' => array (

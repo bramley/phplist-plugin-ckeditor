@@ -1,3 +1,6 @@
+version 2014-10-02
+      Add config setting for path to upload image directory
+
 version 2014-08-14
       Verify that the ckeditor path is correct
       Allow messages to be edited as full HTML pages
