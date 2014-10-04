@@ -1,7 +1,7 @@
 # CKEditor Plugin #
 
 ## Description ##
-This plugin provides CKEditor 4.3 for editing messages and templates within phplist. 
+This plugin provides CKEditor 4.4.5 for editing messages and templates within phplist. 
 
 It also integrates the KCFinder file manager to provide file upload and selection.
 ## Compatibility ###
@@ -97,11 +97,20 @@ See <http://docs.ckeditor.com/#!/guide/dev_styles>
 
 ## Upgrade CKEditor ##
 
-The plugin includes CKEditor 4.3.3 standard build but will not automatically upgrade to a new release.
-You can download a later release of CKEditor or the Basic or Full builds from <http://ckeditor.com/download>.
+The plugin includes CKEditor 4.4.5 full package but will not automatically upgrade to a new release.
+You can download a later release of CKEditor or the Basic or Standard builds from <http://ckeditor.com/download>.
 
 To install the build, expand the zip file, copy the ckeditor directory to your web site, and specify the path to the directory
 on the Settings page. It is recommended to use a new directory rather than overwriting the CKEditor version in the plugin's directory,
+so that it will not be affected if you upgrade the plugin.
+
+## Upgrade KCFinder ##
+
+The plugin includes KCFinder 3.12 but will not automatically upgrade to a new release.
+You can download a new release of KCFinder from <http://kcfinder.sunhater.com/download>.
+
+To install the build, expand the zip file, copy the kcfinder directory to your web site, and specify the path to the directory
+on the Settings page. It is recommended to use a new directory rather than overwriting the KCFinder version in the plugin's directory,
 so that it will not be affected if you upgrade the plugin.
 
 ## Upgrade from phplist 2.10.x with FCKEditor ##
@@ -123,6 +132,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-10-04  Upgrade to CKEditor 4.4.5 full package and KCFinder 3.12
     2014-10-02  Config setting for path to image upload directory
     2014-08-14  Display warning when ckeditor path is incorrect. Allow full-page HTML for messages.
     2014-04-30  Display warning when image directory is not writeable
