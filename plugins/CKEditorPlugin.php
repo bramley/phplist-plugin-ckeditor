@@ -109,16 +109,27 @@ END;
             }
 
             if ($kcUpload) {
+                $kcImageDir = getConfig('kcfinder_image_directory');
+                $kcFilesDir = getConfig('kcfinder_files_directory');
+                $kcFlashDir = getConfig('kcfinder_flash_directory');
+                $session['types'] = array(
+                    $kcFilesDir   =>  "",
+                    $kcFlashDir   =>  "swf",
+                    $kcImageDir  =>  "*img",
+                );
+
                 $_SESSION['KCFINDER'] = $session;
                 $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
-                $kcImageDir = htmlspecialchars(getConfig('kcfinder_image_directory'));
+                $kcImageDir = htmlspecialchars($kcImageDir);
+                $kcFilesDir = htmlspecialchars($kcFilesDir);
+                $kcFlashDir = htmlspecialchars($kcFlashDir);
                 $settings[] = <<<END
-filebrowserBrowseUrl: '$kcPath/browse.php?type=files',
-filebrowserImageBrowseUrl: '$kcPath/browse.php?type=$kcImageDir',
-filebrowserFlashBrowseUrl: '$kcPath/browse.php?type=flash',
-filebrowserUploadUrl: '$kcPath/upload.php?type=files',
-filebrowserImageUploadUrl: '$kcPath/upload.php?type=$kcImageDir',
-filebrowserFlashUploadUrl: '$kcPath/upload.php?type=flash'
+filebrowserBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFilesDir',
+filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir',
+filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir',
+filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir',
+filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir',
+filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir'
 END;
             } else {
                 $html .= sprintf(
@@ -233,6 +244,20 @@ END;
                 'kcfinder_image_directory' => array (
                   'value' => 'image',
                   'description' => 'Name of the image subdirectory of the file upload directory',
+                  'type' => 'text',
+                  'allowempty' => 0,
+                  'category'=> 'CKEditor',
+                ),
+                'kcfinder_files_directory' => array (
+                  'value' => 'files',
+                  'description' => 'Name of the files subdirectory of the file upload directory',
+                  'type' => 'text',
+                  'allowempty' => 0,
+                  'category'=> 'CKEditor',
+                ),
+                'kcfinder_flash_directory' => array (
+                  'value' => 'flash',
+                  'description' => 'Name of the flash subdirectory of the file upload directory',
                   'type' => 'text',
                   'allowempty' => 0,
                   'category'=> 'CKEditor',

@@ -64,23 +64,30 @@ The directory must be writable by the web server. Note that the value is relativ
 If the UPLOADIMAGES\_DIR value in config.php is set to `false` then kcFinder will be disabled and image uploading will not be possible.
 
 ### Settings page ###
-The width and height of the editor window can be specified on the Settings page.
 
-KCFinder will create two subdirectories within the specified directory to store the full-size and thumbnail images.
-The name of the sub-directory for full-size images can be configured on the Settings page. The default value of `image` is fine for a new installation and for upgrading from FCKEditor.
+The Settings page has a CKEditor group where you can configure the plugin.
 
-In some web server configurations the plugin will not be able to correctly derive the file system path to the upload image directory
-from the value of UPLOADIMAGES\_DIR. The plugin will show a message similar to this
+* The website path to CKEditor.
 
-`Image browsing is not available because directory "/xxx/xxx" does not exist or is not writeable.`
+* The website path to a custom configuration file.
 
-If the file system path in the message is wrong but the value of UPLOADIMAGES_DIR is correct, then you can enter the actual file system path that should be used.
+* The width and height of the editor window.
 
-You can select to generate a full HTML page when editing a message template. The template will then include `<html>`, `<head>` and `<body>`
+* You can select to generate a full HTML page when editing a message template. The template will then include `<html>`, `<head>` and `<body>`
 elements. This setting defaults to `Yes`.
 
-Similarly you can select to generate a full HTML page when editing a message. This is useful only when you do not use templates,
+* Similarly you can select to generate a full HTML page when editing a message. This is useful only when you do not use templates,
 otherwise the template and the message will both contain `<html>`, `<head>` and `<body>` elements. The default value is `No`.
+
+* The website path to KCFinder.
+
+* In some web server configurations the plugin will not be able to correctly derive the file system path to the upload image directory
+from the value of UPLOADIMAGES\_DIR. The plugin will show a message similar to this<br>
+`Image browsing is not available because directory "/xxx/xxx" does not exist or is not writeable.`  
+If the file system path in the message is wrong but the value of UPLOADIMAGES_DIR is correct, then you can enter the actual file system path that should be used.
+
+* KCFinder will create sub-directories within the image upload directory to store images, flash files and other files.
+If you need to then you can change the name of a sub-directory from the default value.
 
 ## Custom configuration ##
 Other settings for the editor can be placed in a custom configuration file. This file needs to be within the web root and its
@@ -132,6 +139,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-10-24  Configurable file directories
     2014-10-04  Upgrade to CKEditor 4.4.5 full package and KCFinder 3.12
     2014-10-02  Config setting for path to image upload directory
     2014-08-14  Display warning when ckeditor path is incorrect. Allow full-page HTML for messages.

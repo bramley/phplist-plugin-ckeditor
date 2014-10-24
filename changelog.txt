@@ -1,3 +1,7 @@
+version 2014-10-24
+      Safer if .htaccess is within the kcfinder directory
+      Configurable directories for images, flash files and other files
+
 version 2014-10-04
       Upgrade CKEditor to 4.4.5 full package
       Upgrade KCFinder to 3.12
