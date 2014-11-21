@@ -139,6 +139,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-12-21  Remove htmlspecialchars() calls on javascript
     2014-10-24  Configurable file directories
     2014-10-04  Upgrade to CKEditor 4.4.5 full package and KCFinder 3.12
     2014-10-02  Config setting for path to image upload directory

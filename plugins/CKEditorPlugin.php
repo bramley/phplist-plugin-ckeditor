@@ -119,10 +119,7 @@ END;
                 );
 
                 $_SESSION['KCFINDER'] = $session;
-                $kcPath = htmlspecialchars(rtrim(getConfig('kcfinder_path'), '/'));
-                $kcImageDir = htmlspecialchars($kcImageDir);
-                $kcFilesDir = htmlspecialchars($kcFilesDir);
-                $kcFlashDir = htmlspecialchars($kcFlashDir);
+                $kcPath = rtrim(getConfig('kcfinder_path'), '/');
                 $settings[] = <<<END
 filebrowserBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFilesDir',
 filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir',
@@ -140,7 +137,7 @@ END;
         }
 
         $path = htmlspecialchars(rtrim(getConfig('ckeditor_path'), '/'));
-        $ckConfigPath = htmlspecialchars(rtrim(getConfig('ckeditor_config_path'), '/'));
+        $ckConfigPath = rtrim(getConfig('ckeditor_config_path'), '/');
 
         if ($ckConfigPath) {
             $settings[] = "customConfig: '$ckConfigPath'";
@@ -160,11 +157,11 @@ END;
         $configSettings = implode(",\n", $settings);
         $html .= <<<END
 <script type="text/javascript" src="$path/ckeditor.js"></script>
-<script>
+<script><!--
 CKEDITOR.replace('$fieldname', {
 $configSettings
 });
-</script>
+--></script>
 END;
         return $html;
     }
