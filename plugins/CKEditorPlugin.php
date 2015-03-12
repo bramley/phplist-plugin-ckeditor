@@ -233,7 +233,7 @@ END;
                 ),
                 'kcfinder_uploaddir' => array (
                   'value' => '',
-                  'description' => 'File system path to the upload image directory. Usually leave this emtpy.',
+                  'description' => 'File system path to the upload image directory. Usually leave this empty.',
                   'type' => 'text',
                   'allowempty' => 1,
                   'category'=> 'CKEditor',
