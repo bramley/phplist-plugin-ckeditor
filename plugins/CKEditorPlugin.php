@@ -63,13 +63,14 @@ END;
         global $website, $public_scheme, $systemroot;
 
         $file =  rtrim(getConfig('ckeditor_path'), '/') . '/ckeditor.js';
+        $pathCheck = empty(getConfig('ckeditor_nopath_check'));
 
         if ($file[0] == '/') {
             $file = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $file;
         } else {
             $file = $systemroot . '/' . $file;
         }
-        if (!is_file($file) ) {
+        if ($pathCheck && !is_file($file) ) {
             return sprintf(
                 '<div class="note error">CKEditor is not available because the ckeditor file "%s" does not exist. Check your setting for the path to ckeditor.</div>',
                 $file
@@ -178,6 +179,13 @@ END;
               'value' => PLUGIN_ROOTDIR . self::CODE_DIR . 'ckeditor',
               'description' => 'Path to CKeditor',
               'type' => 'text',
+              'allowempty' => 0,
+              'category'=> 'CKEditor',
+            ),
+            'ckeditor_nopath_check' => array (
+              'value' => false,
+              'description' => 'Skip the check of the path to the editor',
+              'type' => 'boolean',
               'allowempty' => 0,
               'category'=> 'CKEditor',
             ),
