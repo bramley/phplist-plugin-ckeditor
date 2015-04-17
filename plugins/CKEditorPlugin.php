@@ -104,6 +104,9 @@ END;
                 if (is_writeable($kcUploadDir)) {
                     $session['uploadDir'] = $kcUploadDir;
                     $kcUpload = true;
+                } elseif (is_writable($systemroot . '/' .$kcUploadDir)) {
+                    $session['uploadDir'] = $systemroot . '/' .$kcUploadDir;
+                    $kcUpload = true;
                 }
             } elseif (is_writeable($kcUploadDir = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/' . trim(UPLOADIMAGES_DIR, '/'))) {
                 $kcUpload = true;
@@ -122,12 +125,12 @@ END;
                 $_SESSION['KCFINDER'] = $session;
                 $kcPath = rtrim(getConfig('kcfinder_path'), '/');
                 $settings[] = <<<END
-filebrowserBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFilesDir',
-filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir',
-filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir',
-filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir',
-filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir',
-filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir'
+filebrowserBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFilesDir&cms=phplist',
+filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir&cms=phplist',
+filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir&cms=phplist',
+filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir&cms=phplist',
+filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir&cms=phplist',
+filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir&cms=phplist'
 END;
             } else {
                 $html .= sprintf(
