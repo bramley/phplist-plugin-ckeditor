@@ -36,6 +36,11 @@ class CKEditorPlugin extends phplistPlugin
     public $authors = 'Duncan Cameron';
     public $description = 'Provides the CKEditor for editing messages and templates.';
     public $enabled = 1;
+    public $dependencyCheck = array(
+        'phpList version newer than 3.0.10' => 'VERSION > "3.0.10"',
+        'PHP version newer than 5.3' => 'PHP_VERSION_ID > 50300;',
+        'No other editor enabled' => 'empty($GLOBALS["editorplugin"]) || $GLOBALS["editorplugin"] == "CKEditorPlugin"',
+    );
 
     private function kcFinderScript($function)
     {
