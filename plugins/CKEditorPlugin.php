@@ -68,14 +68,13 @@ END;
         global $website, $public_scheme, $systemroot;
 
         $file =  rtrim(getConfig('ckeditor_path'), '/') . '/ckeditor.js';
-        $pathCheck = empty(getConfig('ckeditor_nopath_check'));
 
         if ($file[0] == '/') {
-            $file = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $file;
+           $file = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $file;
         } else {
-            $file = $systemroot . '/' . $file;
+           $file = $systemroot . '/' . $file;
         }
-        if ($pathCheck && !is_file($file) ) {
+        if (CKEDITOR_VERIFY_PATH && !is_file($file) ) {
             return sprintf(
                 '<div class="note error">CKEditor is not available because the ckeditor file "%s" does not exist. Check your setting for the path to ckeditor.</div>',
                 $file
@@ -178,6 +177,7 @@ END;
     public function __construct()
     {
         $this->kcEnabled = defined('UPLOADIMAGES_DIR') && UPLOADIMAGES_DIR !== false;
+        if (!defined('CKEDITOR_VERIFY_PATH')) define('CKEDITOR_VERIFY_PATH',true);
         $this->coderoot = dirname(__FILE__) . self::CODE_DIR;
         $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
             ? file_get_contents($f)
@@ -187,13 +187,6 @@ END;
               'value' => PLUGIN_ROOTDIR . self::CODE_DIR . 'ckeditor',
               'description' => 'Path to CKeditor',
               'type' => 'text',
-              'allowempty' => 0,
-              'category'=> 'CKEditor',
-            ),
-            'ckeditor_nopath_check' => array (
-              'value' => false,
-              'description' => 'Skip the check of the path to the editor',
-              'type' => 'boolean',
               'allowempty' => 0,
               'category'=> 'CKEditor',
             ),
