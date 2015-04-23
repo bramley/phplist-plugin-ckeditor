@@ -70,6 +70,9 @@ END;
     private function editorScript($fieldname, $width, $height, $toolbar)
     {
         global $website, $public_scheme, $systemroot, $documentRoot;
+        if (!isset($documentRoot)) {
+            $documentRoot = $_SERVER['DOCUMENT_ROOT'];
+        }
 
         $file =  rtrim(getConfig('ckeditor_path'), '/') . '/ckeditor.js';
 
