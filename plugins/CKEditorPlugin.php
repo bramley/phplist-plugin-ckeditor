@@ -69,16 +69,16 @@ END;
 
     private function editorScript($fieldname, $width, $height, $toolbar)
     {
-        global $website, $public_scheme, $systemroot;
+        global $website, $public_scheme, $systemroot, $documentRoot;
 
         $file =  rtrim(getConfig('ckeditor_path'), '/') . '/ckeditor.js';
 
         if ($file[0] == '/') {
-           $file = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $file;
+           $file = rtrim($documentRoot, '/') . $file;
         } else {
            $file = $systemroot . '/' . $file;
         }
-        if (CKEDITOR_VERIFY_PATH && !is_file($file) ) {
+        if (!is_file($file) ) {
             return sprintf(
                 '<div class="note error">CKEditor is not available because the ckeditor file "%s" does not exist. Check your setting for the path to ckeditor.</div>',
                 $file
@@ -112,11 +112,11 @@ END;
                 if (is_writeable($kcUploadDir)) {
                     $session['uploadDir'] = $kcUploadDir;
                     $kcUpload = true;
-                } elseif (is_writable($systemroot . '/' .$kcUploadDir)) {
-                    $session['uploadDir'] = $systemroot . '/' .$kcUploadDir;
+                } elseif (is_writable($documentRoot . '/' .$kcUploadDir)) {
+                    $session['uploadDir'] = $documentRoot . '/' .$kcUploadDir;
                     $kcUpload = true;
                 }
-            } elseif (is_writeable($kcUploadDir = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/' . trim(UPLOADIMAGES_DIR, '/'))) {
+            } elseif (is_writeable($kcUploadDir = rtrim($documentRoot, '/') . '/' . trim(UPLOADIMAGES_DIR, '/'))) {
                 $kcUpload = true;
             }
 
@@ -138,7 +138,7 @@ filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir&
 filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir&cms=phplist',
 filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir&cms=phplist',
 filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir&cms=phplist',
-filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir&cms=phplist',
+filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir&cms=phplist'
 END;
             } else {
                 $html .= sprintf(
