@@ -181,7 +181,6 @@ END;
     public function __construct()
     {
         $this->kcEnabled = defined('UPLOADIMAGES_DIR') && UPLOADIMAGES_DIR !== false;
-        if (!defined('CKEDITOR_VERIFY_PATH')) define('CKEDITOR_VERIFY_PATH',true);
         $this->coderoot = dirname(__FILE__) . self::CODE_DIR;
         $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
             ? file_get_contents($f)
