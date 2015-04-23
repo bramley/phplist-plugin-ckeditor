@@ -57,17 +57,29 @@ $function = function(callback) {
 END;
         return $html;
     }
+    
+    public function dependencyCheck()
+    {
+      return array(
+        'phpList version' => version_compare(VERSION, '3.0.12') >= 0,
+        'PHP version' => PHP_VERSION_ID > 50300,
+        'No other editor enabled' => empty($GLOBALS["editorplugin"]) || $GLOBALS["editorplugin"] == "CKEditorPlugin",
+      );
+    }
 
     private function editorScript($fieldname, $width, $height, $toolbar)
     {
-        global $website, $public_scheme, $systemroot;
+        global $website, $public_scheme, $systemroot, $documentRoot;
+        if (!isset($documentRoot)) {
+            $documentRoot = $_SERVER['DOCUMENT_ROOT'];
+        }
 
         $file =  rtrim(getConfig('ckeditor_path'), '/') . '/ckeditor.js';
 
         if ($file[0] == '/') {
-            $file = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $file;
+           $file = rtrim($documentRoot, '/') . $file;
         } else {
-            $file = $systemroot . '/' . $file;
+           $file = $systemroot . '/' . $file;
         }
         if (!is_file($file) ) {
             return sprintf(
@@ -103,8 +115,11 @@ END;
                 if (is_writeable($kcUploadDir)) {
                     $session['uploadDir'] = $kcUploadDir;
                     $kcUpload = true;
+                } elseif (is_writable($documentRoot . '/' .$kcUploadDir)) {
+                    $session['uploadDir'] = $documentRoot . '/' .$kcUploadDir;
+                    $kcUpload = true;
                 }
-            } elseif (is_writeable($kcUploadDir = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/' . trim(UPLOADIMAGES_DIR, '/'))) {
+            } elseif (is_writeable($kcUploadDir = rtrim($documentRoot, '/') . '/' . trim(UPLOADIMAGES_DIR, '/'))) {
                 $kcUpload = true;
             }
 
@@ -121,12 +136,12 @@ END;
                 $_SESSION['KCFINDER'] = $session;
                 $kcPath = rtrim(getConfig('kcfinder_path'), '/');
                 $settings[] = <<<END
-filebrowserBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFilesDir',
-filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir',
-filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir',
-filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir',
-filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir',
-filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir'
+filebrowserBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFilesDir&cms=phplist',
+filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir&cms=phplist',
+filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir&cms=phplist',
+filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir&cms=phplist',
+filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir&cms=phplist',
+filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir&cms=phplist'
 END;
             } else {
                 $html .= sprintf(
