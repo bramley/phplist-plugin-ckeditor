@@ -36,11 +36,6 @@ class CKEditorPlugin extends phplistPlugin
     public $authors = 'Duncan Cameron';
     public $description = 'Provides the CKEditor for editing messages and templates.';
     public $enabled = 1;
-    public $dependencyCheck = array(
-        'phpList version newer than 3.0.10' => 'VERSION > "3.0.10"',
-        'PHP version newer than 5.3' => 'PHP_VERSION_ID > 50300;',
-        'No other editor enabled' => 'empty($GLOBALS["editorplugin"]) || $GLOBALS["editorplugin"] == "CKEditorPlugin"',
-    );
 
     private function kcFinderScript($function)
     {
@@ -61,6 +56,15 @@ $function = function(callback) {
 </script>
 END;
         return $html;
+    }
+    
+    public function dependencyCheck()
+    {
+      return array(
+        'phpList version' => version_compare(VERSION, '3.0.12') >= 0,
+        'PHP version' => PHP_VERSION_ID > 50300,
+        'No other editor enabled' => empty($GLOBALS["editorplugin"]) || $GLOBALS["editorplugin"] == "CKEditorPlugin",
+      );
     }
 
     private function editorScript($fieldname, $width, $height, $toolbar)
@@ -134,7 +138,7 @@ filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir&
 filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir&cms=phplist',
 filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir&cms=phplist',
 filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir&cms=phplist',
-filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir&cms=phplist'
+filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir&cms=phplist',
 END;
             } else {
                 $html .= sprintf(
