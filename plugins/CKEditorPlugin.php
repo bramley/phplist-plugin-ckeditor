@@ -87,7 +87,7 @@ END;
             $settings[] = 'fullPage: true';
         }
 
-        if ($fieldname == 'message' && $fullMessage) {
+        if ($fieldname == 'message' && $fullMessage && !$fullTemplate) {
             $settings[] = 'fullPage: true';
         }
 
@@ -210,14 +210,14 @@ END;
               'description' => 'Allow templates to be edited as full HTML pages',
               'type' => 'boolean',
               'value' => '1',
-              'allowempty' => false,
+              'allowempty' => true,
               'category'=> 'CKEditor',
             ),
             'ckeditor_fullmessage' => array (
               'description' => 'Allow messages to be edited as full HTML pages',
               'type' => 'boolean',
               'value' => '0',
-              'allowempty' => false,
+              'allowempty' => true,
               'category'=> 'CKEditor',
             )
         );

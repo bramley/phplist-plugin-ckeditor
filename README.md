@@ -78,6 +78,7 @@ elements. This setting defaults to `Yes`.
 
 * Similarly you can select to generate a full HTML page when editing a message. This is useful only when you do not use templates,
 otherwise the template and the message will both contain `<html>`, `<head>` and `<body>` elements. The default value is `No`.
+If this field is set to `Yes` then it is ignored if `Allow templates to be edited as full HTML pages` is also set to `Yes`.
 
 * The website path to KCFinder.
 
@@ -139,6 +140,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2015-07-11  Clarify editing as full html page
     2014-12-21  Remove htmlspecialchars() calls on javascript
     2014-10-24  Configurable file directories
     2014-10-04  Upgrade to CKEditor 4.4.5 full package and KCFinder 3.12
