@@ -1,3 +1,7 @@
+version 2015-07-17
+      Remove CKEditor 4.4.5
+      Added CKEditor 4.5.1 full package
+
 version 2015-07-11
       Spelling error
       Clarify editing as a full html page
