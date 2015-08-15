@@ -263,6 +263,16 @@ END;
         }
         parent::__construct();
     }
+    
+    public function dependencyCheck()
+    {
+        global $editorplugin;
+
+        return array(
+            'PHP version at least 5.3.0' => version_compare(PHP_VERSION, '5.3') > 0,
+            'No other editor enabled' => empty($editorplugin) || $editorplugin == __CLASS__,
+        );
+    }
 
     public function adminmenu()
     {

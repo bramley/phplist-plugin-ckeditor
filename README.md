@@ -140,20 +140,21 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
-    2015-07-17  Upgrade to CKEditor 4.5.1 full package
-    2015-07-11  Clarify editing as full html page
-    2014-12-21  Remove htmlspecialchars() calls on javascript
-    2014-10-24  Configurable file directories
-    2014-10-04  Upgrade to CKEditor 4.4.5 full package and KCFinder 3.12
-    2014-10-02  Config setting for path to image upload directory
-    2014-08-14  Display warning when ckeditor path is incorrect. Allow full-page HTML for messages.
-    2014-04-30  Display warning when image directory is not writeable
-    2014-03-07  Upgraded to CKEditor 4.3.3
-    2013-12-22  Allow full HTML page editing for templates
-    2013-12-10  Correct example for allowed content
-    2013-11-26  Use full URL in links
-    2013-09-13  Moved settings into their own CKEditor category
-    2013-09-01  Removed setting for upload files, now UPLOADIMAGES_DIR must be specified
-    2013-04-27  Fix for GitHub issue 2
-    2013-04-22  Fixes for GitHub issues 1 and 3
-    2013-04-11  Initial version for phplist 2.11.x releases
+    2.0.0+20150815  Added dependencies
+    2015-07-17      Upgrade to CKEditor 4.5.1 full package
+    2015-07-11      Clarify editing as full html page
+    2014-12-21      Remove htmlspecialchars() calls on javascript
+    2014-10-24      Configurable file directories
+    2014-10-04      Upgrade to CKEditor 4.4.5 full package and KCFinder 3.12
+    2014-10-02      Config setting for path to image upload directory
+    2014-08-14      Display warning when ckeditor path is incorrect. Allow full-page HTML for messages.
+    2014-04-30      Display warning when image directory is not writeable
+    2014-03-07      Upgraded to CKEditor 4.3.3
+    2013-12-22      Allow full HTML page editing for templates
+    2013-12-10      Correct example for allowed content
+    2013-11-26      Use full URL in links
+    2013-09-13      Moved settings into their own CKEditor category
+    2013-09-01      Removed setting for upload files, now UPLOADIMAGES_DIR must be specified
+    2013-04-27      Fix for GitHub issue 2
+    2013-04-22      Fixes for GitHub issues 1 and 3
+    2013-04-11      Initial version for phplist 2.11.x releases
