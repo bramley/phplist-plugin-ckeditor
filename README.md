@@ -140,6 +140,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.0.2+20160105  Minor internal change
     2.0.1+20151211  Added documentation URL to Manage Plugins page
     2.0.0+20150815  Added dependencies
     2015-07-17      Upgrade to CKEditor 4.5.1 full package

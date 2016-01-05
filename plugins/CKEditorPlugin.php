@@ -300,14 +300,6 @@ END;
 
     public function createImageBrowser($function)
     {
-        static $firstTime = true;
-
-        if ($firstTime) {
-            $firstTime = false;
-            $html = $this->kcFinderScript($function);
-        } else {
-            $html = '';
-        }
-        return $html;
+        return $this->kcFinderScript($function);
     }
 }
