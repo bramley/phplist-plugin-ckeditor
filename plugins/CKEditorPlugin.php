@@ -16,7 +16,7 @@
  * @category  phplist
  * @package   CKEditorPlugin
  * @author    Duncan Cameron
- * @copyright 2013 Duncan Cameron
+ * @copyright 2013-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 class CKEditorPlugin extends phplistPlugin
@@ -38,9 +38,16 @@ class CKEditorPlugin extends phplistPlugin
     public $documentationUrl = 'https://github.com/bramley/phplist-plugin-ckeditor';
     public $enabled = 1;
 
+    /**
+     * Generate the script for kcfinder.
+     * 
+     * See http://kcfinder.sunhater.com/docs/integrate Custom Applications
+     * 
+     * @param   string  $function  Name to be used for the callback function
+     * @return  string  the script element
+     */
     private function kcFinderScript($function)
     {
-    //  see http://kcfinder.sunhater.com/docs/integrate Custom Applications
         $kcPath = rtrim(getConfig('kcfinder_path'), '/');
         $kcImageDir = getConfig('kcfinder_image_directory');
         $kcUrl = htmlspecialchars("$kcPath/browse.php?type=$kcImageDir");
@@ -59,25 +66,97 @@ END;
         return $html;
     }
 
-    private function editorScript($fieldname, $width, $height, $toolbar)
+    /**
+     * Generate the textarea element.
+     * 
+     * @param   string  $fieldname  Name to be used for the textarea element
+     * @param   string  $content  The content for the element
+     * @return  string  the textarea element
+     */
+    private function textArea($fieldname, $content)
+    {
+        $fieldname = htmlspecialchars($fieldname);
+        $content = htmlspecialchars($content);
+        $textArea = <<<END
+<textarea name="$fieldname">$content</textarea>
+END;
+
+        return $textArea;
+    }
+
+    /**
+     * Generate a script element wrapping the CKEditor javascript.
+     * ckeditor.js is loaded synchronously in a script element
+     * 
+     * @param   string  $ckeditorUrl  URL for ckeditor.js
+     * @param   string  $ckScript  The CKEditor javascript to be wrapped
+     * @return  string  the script element
+     */
+    private function scriptForSyncLoad($ckeditorUrl, $ckScript)
+    {
+        $script = <<<END
+<script type="text/javascript" src="$ckeditorUrl"></script>
+<script><!--
+$ckScript
+--></script>
+END;
+
+        return $script;
+    }
+
+    /**
+     * Generate a script element wrapping the CKEditor javascript.
+     * ckeditor.js is loaded dynamically by jQuery and asynchronously
+     * 
+     * @param   string  $ckeditorUrl  URL for ckeditor.js
+     * @param   string  $ckScript  The CKEditor javascript to be wrapped
+     * @return  string  the script element
+     */
+    private function scriptForAsyncLoad($ckeditorUrl, $ckScript)
+    {
+        $script = <<<END
+<script><!--
+jQuery(document).ready(function() {
+    options = {
+        dataType: "script",
+        cache: true,
+        url: "$ckeditorUrl"
+    };
+    jQuery.ajax(options).done(
+        function(script, textStatus ) {
+            $ckScript
+        }
+    )
+})
+--></script>
+END;
+
+        return $script;
+    }
+
+    /**
+     * Generate the javascript to configure CKEditor
+     *
+     * @param   string  $fieldname  Name to be used on the textarea field
+     * @param   int     $width      Width of the editor area 
+     * @param   int     $height     Width of the editor area 
+     * @param   string  $toolbar    The toolbar to use
+     * @return  array   [0] the javascript
+     *                  [1] additional html for warning messages
+     */
+    private function editorScript($fieldname, $width, $height, $toolbar = null)
     {
         global $website, $public_scheme, $systemroot;
 
-        $file =  rtrim(getConfig('ckeditor_path'), '/') . '/ckeditor.js';
+        $html = '';
+        $ckeditorUrl = getConfig('ckeditor_url');
 
-        if ($file[0] == '/') {
-            $file = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $file;
-        } else {
-            $file = $systemroot . '/' . $file;
-        }
-        if (!is_file($file) ) {
-            return sprintf(
-                '<div class="note error">CKEditor is not available because the ckeditor file "%s" does not exist. Check your setting for the path to ckeditor.</div>',
-                $file
+        if (substr($ckeditorUrl, -12) != '/ckeditor.js') {
+            $html .= sprintf(
+                '<div class="note error">CKEditor is not available because the setting for the URL of ckeditor.js "%s" is incorrect.</div>',
+                $ckeditorUrl
             );
         }
-
-        $html = '';
         $settings = array();
         $settings[] = 'allowedContent: true';
 
@@ -137,7 +216,6 @@ END;
             }
         }
 
-        $path = htmlspecialchars(rtrim(getConfig('ckeditor_path'), '/'));
         $ckConfigPath = rtrim(getConfig('ckeditor_config_path'), '/');
 
         if ($ckConfigPath) {
@@ -156,15 +234,15 @@ END;
             $settings[] = "toolbar: '$toolbar'";
         }
         $configSettings = implode(",\n", $settings);
-        $html .= <<<END
-<script type="text/javascript" src="$path/ckeditor.js"></script>
-<script><!--
-CKEDITOR.replace('$fieldname', {
-$configSettings
-});
---></script>
+        $script = <<<END
+            CKEDITOR.replace(
+                '$fieldname',
+                {
+                    $configSettings
+                }
+            );
 END;
-        return $html;
+        return array($script, $html);
     }
 
     public function __construct()
@@ -175,9 +253,9 @@ END;
             ? file_get_contents($f)
             : '';
         $this->settings = array(
-            'ckeditor_path' => array (
-              'value' => PLUGIN_ROOTDIR . self::CODE_DIR . 'ckeditor',
-              'description' => 'Path to CKeditor',
+            'ckeditor_url' => array(
+              'value' => '//cdn.ckeditor.com/4.5.7/full/ckeditor.js',
+              'description' => 'URL of ckeditor.js',
               'type' => 'text',
               'allowempty' => 0,
               'category'=> 'CKEditor',
@@ -280,22 +358,56 @@ END;
         return array();
     }
 
+    /**
+     * Hook called to generate the editor html.
+     * That includes the input textarea field and the ckeditor javascript.
+     *
+     * This method loads ckeditor.js in a script element.
+     *
+     * @param   string  $fieldname  Name to be used on the textarea field
+     * @param   string  $content    The content to be displayed 
+     * @return  string  the complete html and script to display the editor
+     */
     public function editor($fieldname, $content)
     {
         $width = getConfig('ckeditor_width');
         $height = getConfig('ckeditor_height');
-        return $this->createEditor($fieldname, $content, $width, $height);
+        list($ckScript, $html) = $this->editorScript($fieldname, $width, $height);
+
+        $ckeditorUrl = getConfig('ckeditor_url');
+
+        return $this->textArea($fieldname, $content)
+            . $html
+            . $this->scriptForSyncLoad($ckeditorUrl, $ckScript);
     }
 
+    /**
+     * Alternative method to generate the html for the editor.
+     * This method loads ckeditor.js asynchronously to allow use of its CDN when
+     * the requesting page is being loaded by jquery (in Content Areas plugin).
+     *
+     * @param   string  $fieldname  Name to be used on the textarea field
+     * @param   string  $content    The content to be displayed 
+     * @param   int     $width      Width of the editor area 
+     * @param   int     $height     Width of the editor area 
+     * @param   string  $toolbar    The toolbar to use
+     * @return  string  the complete html and script to display the editor
+     */
     public function createEditor($fieldname, $content, $width = null, $height = null, $toolbar = null)
     {
-        $fieldname = htmlspecialchars($fieldname);
-        $content = htmlspecialchars($content);
-        $html = <<<END
-<textarea name="$fieldname">$content</textarea>
-END;
-        $html .= $this->editorScript($fieldname, $width, $height, $toolbar);
-        return $html;
+        list($ckScript, $html) = $this->editorScript($fieldname, $width, $height, $toolbar);
+
+        $ckeditorUrl = getConfig('ckeditor_url');
+        $host = parse_url($ckeditorUrl, PHP_URL_HOST);
+
+        $script = ($host == null || $host == $_SERVER["HTTP_HOST"])
+            ? $this->scriptForSyncLoad($ckeditorUrl, $ckScript)
+            : $this->scriptForAsyncLoad($ckeditorUrl, $ckScript);
+
+        return $this->textArea($fieldname, $content)
+            . $html
+            . $script;
+
     }
 
     public function createImageBrowser($function)

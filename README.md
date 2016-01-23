@@ -1,7 +1,7 @@
 # CKEditor Plugin #
 
 ## Description ##
-This plugin provides CKEditor 4.5.1 for editing messages and templates within phplist. 
+This plugin provides CKEditor for editing messages and templates within phplist. 
 
 It also integrates the KCFinder file manager to provide file upload and selection.
 ## Compatibility ###
@@ -17,7 +17,7 @@ The default plugin directory is `plugins` within the admin directory.
 You can use a directory outside of the web root by changing the definition of `PLUGIN_ROOTDIR` in config.php.
 The benefit of this is that plugins will not be affected when you upgrade phplist.
 ### Install through phplist ###
-Install on the Plugins page (menu Config > Plugins) using the package URL `https://github.com/bramley/phplist-plugin-ckeditor/archive/master.zip`.
+Install on the Manage Plugins page (menu Config > Manage Plugins) using the package URL `https://github.com/bramley/phplist-plugin-ckeditor/archive/master.zip`.
 
 In phplist releases 3.0.5 and earlier there is a bug that can cause a plugin to be incompletely installed on some configurations (<https://mantis.phplist.com/view.php?id=16865>). 
 Check that these files are in the plugin directory. If not then you will need to install manually. The bug has been fixed in release 3.0.6.
@@ -26,6 +26,8 @@ Check that these files are in the plugin directory. If not then you will need to
 * the directory CKEditorPlugin
 
 ### Install manually ###
+If installation through phplist does not work then you can install the plugin manually.
+
 Download the plugin zip file from <https://github.com/bramley/phplist-plugin-ckeditor/archive/master.zip>
 
 Expand the zip file, then copy the contents of the plugins directory to your phplist plugins directory.
@@ -35,25 +37,21 @@ This should contain
 * the directory CKEditorPlugin
 
 ### Enable the plugin ###
-Click the small orange icon to enable the plugin. Note that only one editor should be enabled, otherwise phplist will choose the first
-that it finds.
+Click the small orange icon to enable the plugin. Note that only one editor can be enabled.
 
-### Location of the CKEditor and KCFinder directories ###
-The CKEditor and KCFinder directories must be within the web root.
-If you have the default plugin location, `define("PLUGIN_ROOTDIR","plugins")` in config.php, then the plugin will use the correct paths automatically.
+### Location of the KCFinder directory ###
+The KCFinder directory must be within the web root.
+If you have the default plugin location, `define("PLUGIN_ROOTDIR","plugins")` in config.php, then the plugin will use the correct path automatically.
 
-If you have placed the plugin directory outside of the web root then you must move or copy the `ckeditor` and `kcfinder` directories from the plugin's
+If you have placed the plugin directory outside of the web root then you must move or copy the `kcfinder` directory from the plugin's
 directory to somewhere within the web root.
 
-Then use the Settings page (menu Config > Settings) to specify the path to each directory.
+Then use the Settings page (menu Config > Settings) to specify the path to the KCFinder directory.
 
-* the path to CKEditor
-* the path to KCFinder 
-
-Each path should be from the web root, such as `/ckeditor`, not the filesystem path.
+The path should be from the web root, such as `/kcfinder`, not the filesystem path.
 
 Also, if you move or rename the phplist directory or the plugin directory after installing the plugin, then you will need
-to modify the paths to CKEditor and KCFinder as they will not change automatically.
+to modify the path to KCFinder as it will not change automatically.
 
 ## Configuration ##
 
@@ -67,7 +65,7 @@ If the UPLOADIMAGES\_DIR value in config.php is set to `false` then kcFinder wil
 
 The Settings page has a CKEditor group where you can configure the plugin.
 
-* The website path to CKEditor.
+* The URL of ckeditor.js
 
 * The website path to a custom configuration file.
 
@@ -103,14 +101,21 @@ define styles.
 
 See <http://docs.ckeditor.com/#!/guide/dev_styles>
 
+## Location of CKEditor ##
+
+Starting in version 2.1 of the plugin CKEditor is loaded from its Content Delivery Network. Earlier versions
+of the plugin included a copy of CKEditor but that is no longer the case.
+
+If you want to customise CKEditor, such as by adding further plugins to it, then you can install a local copy. You
+must then enter the URL for ckeditor.js in the CKEditor group on the Settings page. For example, if you installed CKEditor in the
+directory `ckeditor_4.5.6` of your web site then the setting would be `/ckeditor_4.5.6/ckeditor.js`.
+
+
 ## Upgrade CKEditor ##
 
-The plugin includes CKEditor 4.5.1 full package but will not automatically upgrade to a new release.
-You can download a later release of CKEditor or the Basic or Standard builds from <http://ckeditor.com/download>.
-
-To install the build, expand the zip file, copy the ckeditor directory to your web site, and specify the path to the directory
-on the Settings page. It is recommended to use a new directory rather than overwriting the CKEditor version in the plugin's directory,
-so that it will not be affected if you upgrade the plugin.
+The plugin uses CKEditor 4.5.7 full package but will not automatically upgrade to a new release.
+To see whether there is a later release, or to use either the Basic or the Standard package, visit <http://ckeditor.com/download#cdn-row>,
+then modify the setting "URL of ckeditor.js" on the Settings page.
 
 ## Upgrade KCFinder ##
 
