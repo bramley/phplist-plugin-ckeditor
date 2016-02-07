@@ -1,6 +1,6 @@
 <?php
 /**
- * CKEditorPlugin for phplist
+ * CKEditorPlugin for phplist.
  * 
  * This file is a part of CKEditorPlugin.
  *
@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   CKEditorPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2013-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
@@ -43,8 +43,9 @@ class CKEditorPlugin extends phplistPlugin
      * 
      * See http://kcfinder.sunhater.com/docs/integrate Custom Applications
      * 
-     * @param   string  $function  Name to be used for the callback function
-     * @return  string  the script element
+     * @param string $function Name to be used for the callback function
+     *
+     * @return string the script element
      */
     private function kcFinderScript($function)
     {
@@ -63,15 +64,17 @@ $function = function(callback) {
 }
 </script>
 END;
+
         return $html;
     }
 
     /**
      * Generate the textarea element.
      * 
-     * @param   string  $fieldname  Name to be used for the textarea element
-     * @param   string  $content  The content for the element
-     * @return  string  the textarea element
+     * @param string $fieldname Name to be used for the textarea element
+     * @param string $content   The content for the element
+     *
+     * @return string the textarea element
      */
     private function textArea($fieldname, $content)
     {
@@ -86,11 +89,12 @@ END;
 
     /**
      * Generate a script element wrapping the CKEditor javascript.
-     * ckeditor.js is loaded synchronously in a script element
+     * ckeditor.js is loaded synchronously in a script element.
      * 
-     * @param   string  $ckeditorUrl  URL for ckeditor.js
-     * @param   string  $ckScript  The CKEditor javascript to be wrapped
-     * @return  string  the script element
+     * @param string $ckeditorUrl URL for ckeditor.js
+     * @param string $ckScript    The CKEditor javascript to be wrapped
+     *
+     * @return string the script element
      */
     private function scriptForSyncLoad($ckeditorUrl, $ckScript)
     {
@@ -106,11 +110,12 @@ END;
 
     /**
      * Generate a script element wrapping the CKEditor javascript.
-     * ckeditor.js is loaded dynamically by jQuery and asynchronously
+     * ckeditor.js is loaded dynamically by jQuery and asynchronously.
      * 
-     * @param   string  $ckeditorUrl  URL for ckeditor.js
-     * @param   string  $ckScript  The CKEditor javascript to be wrapped
-     * @return  string  the script element
+     * @param string $ckeditorUrl URL for ckeditor.js
+     * @param string $ckScript    The CKEditor javascript to be wrapped
+     *
+     * @return string the script element
      */
     private function scriptForAsyncLoad($ckeditorUrl, $ckScript)
     {
@@ -135,14 +140,15 @@ END;
     }
 
     /**
-     * Generate the javascript to configure CKEditor
+     * Generate the javascript to configure CKEditor.
      *
-     * @param   string  $fieldname  Name to be used on the textarea field
-     * @param   int     $width      Width of the editor area 
-     * @param   int     $height     Width of the editor area 
-     * @param   string  $toolbar    The toolbar to use
-     * @return  array   [0] the javascript
-     *                  [1] additional html for warning messages
+     * @param string $fieldname Name to be used on the textarea field
+     * @param int    $width     Width of the editor area 
+     * @param int    $height    Width of the editor area 
+     * @param string $toolbar   The toolbar to use
+     *
+     * @return array [0] the javascript
+     *               [1] additional html for warning messages
      */
     private function editorScript($fieldname, $width, $height, $toolbar = null)
     {
@@ -174,11 +180,11 @@ END;
         if ($this->kcEnabled) {
             $session = array(
                 'disabled' => false,
-                'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/'))
+                'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/')),
             );
             $kcUpload = false;
             $kcUploadDir = getConfig('kcfinder_uploaddir');
-            
+
             if ($kcUploadDir) {
                 if (is_writeable($kcUploadDir)) {
                     $session['uploadDir'] = $kcUploadDir;
@@ -193,9 +199,9 @@ END;
                 $kcFilesDir = getConfig('kcfinder_files_directory');
                 $kcFlashDir = getConfig('kcfinder_flash_directory');
                 $session['types'] = array(
-                    $kcFilesDir   =>  "",
-                    $kcFlashDir   =>  "swf",
-                    $kcImageDir  =>  "*img",
+                    $kcFilesDir => '',
+                    $kcFlashDir => 'swf',
+                    $kcImageDir => '*img',
                 );
 
                 $_SESSION['KCFINDER'] = $session;
@@ -242,6 +248,7 @@ END;
                 }
             );
 END;
+
         return array($script, $html);
     }
 
@@ -258,91 +265,91 @@ END;
               'description' => 'URL of ckeditor.js',
               'type' => 'text',
               'allowempty' => 0,
-              'category'=> 'CKEditor',
+              'category' => 'CKEditor',
             ),
-            'ckeditor_config_path' => array (
+            'ckeditor_config_path' => array(
               'value' => '',
               'description' => 'Path to CKeditor custom configuration file',
               'type' => 'text',
               'allowempty' => 1,
-              'category'=> 'CKEditor',
+              'category' => 'CKEditor',
             ),
-            'ckeditor_width' => array (
+            'ckeditor_width' => array(
               'value' => 600,
               'description' => 'Width in px of CKeditor Area',
               'type' => 'integer',
               'allowempty' => 0,
               'min' => 100,
               'max' => 800,
-              'category'=> 'CKEditor',
+              'category' => 'CKEditor',
             ),
-            'ckeditor_height' => array (
+            'ckeditor_height' => array(
               'value' => 600,
               'description' => 'Height in px of CKeditor Area',
               'type' => 'integer',
               'allowempty' => 0,
               'min' => 100,
               'max' => 800,
-              'category'=> 'CKEditor',
+              'category' => 'CKEditor',
             ),
-            'ckeditor_fulltemplate' => array (
+            'ckeditor_fulltemplate' => array(
               'description' => 'Allow templates to be edited as full HTML pages',
               'type' => 'boolean',
               'value' => '1',
               'allowempty' => true,
-              'category'=> 'CKEditor',
+              'category' => 'CKEditor',
             ),
-            'ckeditor_fullmessage' => array (
+            'ckeditor_fullmessage' => array(
               'description' => 'Allow messages to be edited as full HTML pages',
               'type' => 'boolean',
               'value' => '0',
               'allowempty' => true,
-              'category'=> 'CKEditor',
-            )
+              'category' => 'CKEditor',
+            ),
         );
 
         if ($this->kcEnabled) {
             $this->settings += array(
-                'kcfinder_path' => array (
-                  'value' =>  PLUGIN_ROOTDIR . self::CODE_DIR . 'kcfinder',
+                'kcfinder_path' => array(
+                  'value' => PLUGIN_ROOTDIR . self::CODE_DIR . 'kcfinder',
                   'description' => 'Path to KCFinder',
                   'type' => 'text',
                   'allowempty' => 0,
-                  'category'=> 'CKEditor',
+                  'category' => 'CKEditor',
                 ),
-                'kcfinder_uploaddir' => array (
+                'kcfinder_uploaddir' => array(
                   'value' => '',
                   'description' => 'File system path to the upload image directory. Usually leave this empty.',
                   'type' => 'text',
                   'allowempty' => 1,
-                  'category'=> 'CKEditor',
+                  'category' => 'CKEditor',
                 ),
-                'kcfinder_image_directory' => array (
+                'kcfinder_image_directory' => array(
                   'value' => 'image',
                   'description' => 'Name of the image subdirectory of the file upload directory',
                   'type' => 'text',
                   'allowempty' => 0,
-                  'category'=> 'CKEditor',
+                  'category' => 'CKEditor',
                 ),
-                'kcfinder_files_directory' => array (
+                'kcfinder_files_directory' => array(
                   'value' => 'files',
                   'description' => 'Name of the files subdirectory of the file upload directory',
                   'type' => 'text',
                   'allowempty' => 0,
-                  'category'=> 'CKEditor',
+                  'category' => 'CKEditor',
                 ),
-                'kcfinder_flash_directory' => array (
+                'kcfinder_flash_directory' => array(
                   'value' => 'flash',
                   'description' => 'Name of the flash subdirectory of the file upload directory',
                   'type' => 'text',
                   'allowempty' => 0,
-                  'category'=> 'CKEditor',
+                  'category' => 'CKEditor',
                 ),
             );
         }
         parent::__construct();
     }
-    
+
     public function dependencyCheck()
     {
         global $editorplugin;
@@ -364,9 +371,10 @@ END;
      *
      * This method loads ckeditor.js in a script element.
      *
-     * @param   string  $fieldname  Name to be used on the textarea field
-     * @param   string  $content    The content to be displayed 
-     * @return  string  the complete html and script to display the editor
+     * @param string $fieldname Name to be used on the textarea field
+     * @param string $content   The content to be displayed 
+     *
+     * @return string the complete html and script to display the editor
      */
     public function editor($fieldname, $content)
     {
@@ -386,12 +394,13 @@ END;
      * This method loads ckeditor.js asynchronously to allow use of its CDN when
      * the requesting page is being loaded by jquery (in Content Areas plugin).
      *
-     * @param   string  $fieldname  Name to be used on the textarea field
-     * @param   string  $content    The content to be displayed 
-     * @param   int     $width      Width of the editor area 
-     * @param   int     $height     Width of the editor area 
-     * @param   string  $toolbar    The toolbar to use
-     * @return  string  the complete html and script to display the editor
+     * @param string $fieldname Name to be used on the textarea field
+     * @param string $content   The content to be displayed 
+     * @param int    $width     Width of the editor area 
+     * @param int    $height    Width of the editor area 
+     * @param string $toolbar   The toolbar to use
+     *
+     * @return string the complete html and script to display the editor
      */
     public function createEditor($fieldname, $content, $width = null, $height = null, $toolbar = null)
     {
@@ -400,14 +409,13 @@ END;
         $ckeditorUrl = getConfig('ckeditor_url');
         $host = parse_url($ckeditorUrl, PHP_URL_HOST);
 
-        $script = ($host == null || $host == $_SERVER["HTTP_HOST"])
+        $script = ($host == null || $host == $_SERVER['HTTP_HOST'])
             ? $this->scriptForSyncLoad($ckeditorUrl, $ckScript)
             : $this->scriptForAsyncLoad($ckeditorUrl, $ckScript);
 
         return $this->textArea($fieldname, $content)
             . $html
             . $script;
-
     }
 
     public function createImageBrowser($function)

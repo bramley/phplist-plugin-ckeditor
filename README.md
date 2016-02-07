@@ -103,7 +103,7 @@ See <http://docs.ckeditor.com/#!/guide/dev_styles>
 
 ## Location of CKEditor ##
 
-Starting in version 2.1 of the plugin CKEditor is loaded from its Content Delivery Network. Earlier versions
+Starting in version 2.1.0 of the plugin CKEditor is loaded from its Content Delivery Network. Earlier versions
 of the plugin included a copy of CKEditor but that is no longer the case.
 
 If you want to customise CKEditor, such as by adding further plugins to it, then you can install a local copy. You
@@ -145,6 +145,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.1.0+20160207  Load ckeditor from its CDN
     2.0.2+20160105  Minor internal change
     2.0.1+20151211  Added documentation URL to Manage Plugins page
     2.0.0+20150815  Added dependencies
