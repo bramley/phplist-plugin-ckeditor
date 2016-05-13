@@ -1,3 +1,6 @@
+version 2.1.1+20160513
+      Move configuration documentation to the phplist site
+
 version 2.1.0+20160207
       Load ckeditor from its Content Delivery Network instead of using a local copy
       Coding standards changes

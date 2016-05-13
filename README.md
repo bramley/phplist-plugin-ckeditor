@@ -1,9 +1,9 @@
 # CKEditor Plugin #
 
 ## Description ##
-This plugin provides CKEditor for editing messages and templates within phplist. 
+This plugin provides CKEditor for editing messages and templates within phplist. It also integrates the KCFinder file manager to provide file upload and selection.
 
-It also integrates the KCFinder file manager to provide file upload and selection.
+The plugin has been included in phplist since release 3.2.0 of phplist, so you should not normally need to install the plugin yourself.
 ## Compatibility ###
 
 CKEditor and KCFinder are compatible with all the major browsers, see the CKEditor site <http://ckeditor.com/about>
@@ -53,88 +53,9 @@ The path should be from the web root, such as `/kcfinder`, not the filesystem pa
 Also, if you move or rename the phplist directory or the plugin directory after installing the plugin, then you will need
 to modify the path to KCFinder as it will not change automatically.
 
-## Configuration ##
+## Usage ##
 
-### config.php ###
-The UPLOADIMAGES\_DIR value in config.php must be set to the location of a directory where KCFinder can store uploaded images.
-The directory must be writable by the web server. Note that the value is relative to the web root and must not contain a leading '/'.
-
-If the UPLOADIMAGES\_DIR value in config.php is set to `false` then kcFinder will be disabled and image uploading will not be possible.
-
-### Settings page ###
-
-The Settings page has a CKEditor group where you can configure the plugin.
-
-* The URL of ckeditor.js
-
-* The website path to a custom configuration file.
-
-* The width and height of the editor window.
-
-* You can select to generate a full HTML page when editing a message template. The template will then include `<html>`, `<head>` and `<body>`
-elements. This setting defaults to `Yes`.
-
-* Similarly you can select to generate a full HTML page when editing a message. This is useful only when you do not use templates,
-otherwise the template and the message will both contain `<html>`, `<head>` and `<body>` elements. The default value is `No`.
-If this field is set to `Yes` then it is ignored if `Allow templates to be edited as full HTML pages` is also set to `Yes`.
-
-* The website path to KCFinder.
-
-* In some web server configurations the plugin will not be able to correctly derive the file system path to the upload image directory
-from the value of UPLOADIMAGES\_DIR. The plugin will show a message similar to this<br>
-`Image browsing is not available because directory "/xxx/xxx" does not exist or is not writeable.`  
-If the file system path in the message is wrong but the value of UPLOADIMAGES_DIR is correct, then you can enter the actual file system path that should be used.
-
-* KCFinder will create sub-directories within the image upload directory to store images, flash files and other files.
-If you need to then you can change the name of a sub-directory from the default value.
-
-## Custom configuration ##
-Other settings for the editor can be placed in a custom configuration file. This file needs to be within the web root and its
-location specified on the Settings page. A sample custom configuration file `CKEditorPlugin/sample.ckconfig.js` is provided which can be used as the basis for your own settings.
-
-See <http://docs.ckeditor.com/#!/api/CKEDITOR.config> for how to specify configuration settings.
-## Styles ##
-
-Style definitions can be specified in the custom configuration file, and they will then appear in the Styles drop-down list when editing a message.
-Additionally, a CSS stylesheet file can be parsed to provide the style definitions. The sample custom configuration file has an example of how to
-define styles.
-
-See <http://docs.ckeditor.com/#!/guide/dev_styles>
-
-## Location of CKEditor ##
-
-Starting in version 2.1.0 of the plugin CKEditor is loaded from its Content Delivery Network. Earlier versions
-of the plugin included a copy of CKEditor but that is no longer the case.
-
-If you want to customise CKEditor, such as by adding further plugins to it, then you can install a local copy. You
-must then enter the URL for ckeditor.js in the CKEditor group on the Settings page. For example, if you installed CKEditor in the
-directory `ckeditor_4.5.6` of your web site then the setting would be `/ckeditor_4.5.6/ckeditor.js`.
-
-
-## Upgrade CKEditor ##
-
-The plugin uses CKEditor 4.5.7 full package but will not automatically upgrade to a new release.
-To see whether there is a later release, or to use either the Basic or the Standard package, visit <http://ckeditor.com/download#cdn-row>,
-then modify the setting "URL of ckeditor.js" on the Settings page.
-
-## Upgrade KCFinder ##
-
-The plugin includes KCFinder 3.12 but will not automatically upgrade to a new release.
-You can download a new release of KCFinder from <http://kcfinder.sunhater.com/download>.
-
-To install the build, expand the zip file, copy the kcfinder directory to your web site, and specify the path to the directory
-on the Settings page. It is recommended to use a new directory rather than overwriting the KCFinder version in the plugin's directory,
-so that it will not be affected if you upgrade the plugin.
-
-## Upgrade from phplist 2.10.x with FCKEditor ##
-
-In phplist 2.10 the FCKIMAGES_DIR value in config.php defines the directory into which images will be uploaded.
-The value is relative to the phplist root directory.
-
-In phplist 3.x a different value, UPLOADIMAGES\_DIR, is used to define the directory. This value is relative to the web root,
-not to the phplist root directory. To continue using the same upload directory you must set UPLOADIMAGES\_DIR correctly.
-So, for example, if the existing image upload directory is /lists/uploadimages then the FCKIMAGES\_DIR would be `uploadimages` but the 
-value for UPLOADIMAGES\_DIR would be `lists/uploadimages`.
+For guidance on configuring the plugin see the plugin's page within the phplist documentation site <https://resources.phplist.com/plugin/ckeditor>.
 
 ## Donation ##
 
@@ -145,6 +66,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.1.1+20160513  Move configuration documentation to the phplist site
     2.1.0+20160207  Load ckeditor from its CDN
     2.0.2+20160105  Minor internal change
     2.0.1+20151211  Added documentation URL to Manage Plugins page

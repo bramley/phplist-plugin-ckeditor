@@ -35,7 +35,7 @@ class CKEditorPlugin extends phplistPlugin
     public $editorProvider = true;
     public $authors = 'Duncan Cameron';
     public $description = 'Provides the CKEditor for editing messages and templates.';
-    public $documentationUrl = 'https://github.com/bramley/phplist-plugin-ckeditor';
+    public $documentationUrl = 'https://resources.phplist.com/plugin/ckeditor';
     public $enabled = 1;
 
     /**
