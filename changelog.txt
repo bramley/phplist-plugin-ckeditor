@@ -1,3 +1,6 @@
+version 2.1.2+20160514
+      Use same htaccess directives as core phplist
+
 version 2.1.1+20160513
       Move configuration documentation to the phplist site
 
