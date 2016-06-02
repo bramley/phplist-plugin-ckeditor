@@ -182,19 +182,28 @@ END;
                 'disabled' => false,
                 'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/')),
             );
-            $kcUpload = false;
+            $uploadDirIsValid = false;
             $kcUploadDir = getConfig('kcfinder_uploaddir');
 
             if ($kcUploadDir) {
                 if (is_writeable($kcUploadDir)) {
-                    $session['uploadDir'] = $kcUploadDir;
-                    $kcUpload = true;
+                    $uploadDirIsValid = true;
                 }
-            } elseif (is_writeable($kcUploadDir = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/' . trim(UPLOADIMAGES_DIR, '/'))) {
-                $kcUpload = true;
+            } else {
+                $kcUploadDir = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/' . trim(UPLOADIMAGES_DIR, '/');
+                $realUploadDir = realpath($kcUploadDir);
+
+                if ($realUploadDir) {
+                    $kcUploadDir = $realUploadDir;
+
+                    if (is_writeable($kcUploadDir)) {
+                        $uploadDirIsValid = true;
+                    }
+                }
             }
 
-            if ($kcUpload) {
+            if ($uploadDirIsValid) {
+                $session['uploadDir'] = $kcUploadDir;
                 $kcImageDir = getConfig('kcfinder_image_directory');
                 $kcFilesDir = getConfig('kcfinder_files_directory');
                 $kcFlashDir = getConfig('kcfinder_flash_directory');
@@ -215,10 +224,13 @@ filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir'
 filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir'
 END;
             } else {
-                $html .= sprintf(
-                    '<div class="note error">Image browsing is not available because directory "%s" does not exist or is not writeable.</div>',
-                    htmlspecialchars($kcUploadDir)
-                );
+                $format = <<<END
+<div class="note error">
+Image browsing is not available because directory "%s" does not exist or is not writeable.
+<a href="https://resources.phplist.com/plugin/ckeditor#issues" target="_blank">How to resolve this problem.</a>
+</div>
+END;
+                $html .= sprintf($format, htmlspecialchars($kcUploadDir));
             }
         }
 

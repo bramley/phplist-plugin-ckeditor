@@ -66,6 +66,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.1.3+20160603  Improve derivation of path to upload directory
     2.1.2+20160514  Update KCFinder .htaccess file
     2.1.1+20160513  Move configuration documentation to the phplist site
     2.1.0+20160207  Load ckeditor from its CDN
