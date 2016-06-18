@@ -1,6 +1,7 @@
 <?php
+
 /**
- * CKEditorPlugin for phplist
+ * CKEditorPlugin for phplist.
  * 
  * This file is a part of CKEditorPlugin.
  *
@@ -14,7 +15,7 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   CKEditorPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
@@ -39,7 +40,7 @@ class CKEditorPlugin extends phplistPlugin
 
     private function kcFinderScript($function)
     {
-    //  see http://kcfinder.sunhater.com/docs/integrate Custom Applications
+        //  see http://kcfinder.sunhater.com/docs/integrate Custom Applications
         $kcPath = rtrim(getConfig('kcfinder_path'), '/');
         $kcImageDir = getConfig('kcfinder_image_directory');
         $kcUrl = htmlspecialchars("$kcPath/browse.php?type=$kcImageDir");
@@ -55,21 +56,34 @@ $function = function(callback) {
 }
 </script>
 END;
+
         return $html;
+    }
+
+    public function dependencyCheck()
+    {
+        return array(
+        'phpList version'         => version_compare(VERSION, '3.0.12') >= 0,
+        'PHP version'             => PHP_VERSION_ID > 50300,
+        'No other editor enabled' => empty($GLOBALS['editorplugin']) || $GLOBALS['editorplugin'] == 'CKEditorPlugin',
+      );
     }
 
     private function editorScript($fieldname, $width, $height, $toolbar)
     {
-        global $website, $public_scheme, $systemroot;
+        global $website, $public_scheme, $systemroot, $documentRoot;
+        if (!isset($documentRoot)) {
+            $documentRoot = $_SERVER['DOCUMENT_ROOT'];
+        }
 
-        $file =  rtrim(getConfig('ckeditor_path'), '/') . '/ckeditor.js';
+        $file =  rtrim(getConfig('ckeditor_path'), '/').'/ckeditor.js';
 
         if ($file[0] == '/') {
-            $file = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $file;
+            $file = rtrim($documentRoot, '/').$file;
         } else {
-            $file = $systemroot . '/' . $file;
+            $file = $systemroot.'/'.$file;
         }
-        if (!is_file($file) ) {
+        if (!is_file($file)) {
             return sprintf(
                 '<div class="note error">CKEditor is not available because the ckeditor file "%s" does not exist. Check your setting for the path to ckeditor.</div>',
                 $file
@@ -87,24 +101,27 @@ END;
             $settings[] = 'fullPage: true';
         }
 
-        if ($fieldname == 'message' && $fullMessage && !$fullTemplate) {
+        if ($fieldname == 'message' && $fullMessage) {
             $settings[] = 'fullPage: true';
         }
 
         if ($this->kcEnabled) {
             $session = array(
-                'disabled' => false,
-                'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/'))
+                'disabled'  => false,
+                'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/')),
             );
             $kcUpload = false;
             $kcUploadDir = getConfig('kcfinder_uploaddir');
-            
+
             if ($kcUploadDir) {
                 if (is_writeable($kcUploadDir)) {
                     $session['uploadDir'] = $kcUploadDir;
                     $kcUpload = true;
+                } elseif (is_writable($documentRoot.'/'.$kcUploadDir)) {
+                    $session['uploadDir'] = $documentRoot.'/'.$kcUploadDir;
+                    $kcUpload = true;
                 }
-            } elseif (is_writeable($kcUploadDir = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/' . trim(UPLOADIMAGES_DIR, '/'))) {
+            } elseif (is_writeable($kcUploadDir = rtrim($documentRoot, '/').'/'.trim(UPLOADIMAGES_DIR, '/'))) {
                 $kcUpload = true;
             }
 
@@ -113,25 +130,25 @@ END;
                 $kcFilesDir = getConfig('kcfinder_files_directory');
                 $kcFlashDir = getConfig('kcfinder_flash_directory');
                 $session['types'] = array(
-                    $kcFilesDir   =>  "",
-                    $kcFlashDir   =>  "swf",
-                    $kcImageDir  =>  "*img",
+                    $kcFilesDir   => '',
+                    $kcFlashDir   => 'swf',
+                    $kcImageDir   => '*img',
                 );
 
                 $_SESSION['KCFINDER'] = $session;
                 $kcPath = rtrim(getConfig('kcfinder_path'), '/');
                 $settings[] = <<<END
-filebrowserBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFilesDir',
-filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir',
-filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir',
-filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir',
-filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir',
-filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir'
+filebrowserBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFilesDir&cms=phplist',
+filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir&cms=phplist',
+filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir&cms=phplist',
+filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir&cms=phplist',
+filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir&cms=phplist',
+filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir&cms=phplist'
 END;
             } else {
                 $html .= sprintf(
                     '<div class="note error">Image browsing is not available because directory "%s" does not exist or is not writeable.</div>',
-                    htmlspecialchars($kcUploadDir)
+                    htmlspecialchars($documentRoot.$kcUploadDir)
                 );
             }
         }
@@ -169,109 +186,99 @@ END;
     public function __construct()
     {
         $this->kcEnabled = defined('UPLOADIMAGES_DIR') && UPLOADIMAGES_DIR !== false;
-        $this->coderoot = dirname(__FILE__) . self::CODE_DIR;
-        $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
+        $this->coderoot = dirname(__FILE__).self::CODE_DIR;
+        $this->version = (is_file($f = $this->coderoot.self::VERSION_FILE))
             ? file_get_contents($f)
             : '';
         $this->settings = array(
-            'ckeditor_path' => array (
-              'value' => PLUGIN_ROOTDIR . self::CODE_DIR . 'ckeditor',
+            'ckeditor_path' => array(
+              'value'       => PLUGIN_ROOTDIR.self::CODE_DIR.'ckeditor',
               'description' => 'Path to CKeditor',
-              'type' => 'text',
-              'allowempty' => 0,
-              'category'=> 'CKEditor',
+              'type'        => 'text',
+              'allowempty'  => 0,
+              'category'    => 'CKEditor',
             ),
-            'ckeditor_config_path' => array (
-              'value' => '',
+            'ckeditor_config_path' => array(
+              'value'       => '',
               'description' => 'Path to CKeditor custom configuration file',
-              'type' => 'text',
-              'allowempty' => 1,
-              'category'=> 'CKEditor',
+              'type'        => 'text',
+              'allowempty'  => 1,
+              'category'    => 'CKEditor',
             ),
-            'ckeditor_width' => array (
-              'value' => 600,
+            'ckeditor_width' => array(
+              'value'       => 600,
               'description' => 'Width in px of CKeditor Area',
-              'type' => 'integer',
-              'allowempty' => 0,
-              'min' => 100,
-              'max' => 800,
-              'category'=> 'CKEditor',
+              'type'        => 'integer',
+              'allowempty'  => 0,
+              'min'         => 100,
+              'max'         => 800,
+              'category'    => 'CKEditor',
             ),
-            'ckeditor_height' => array (
-              'value' => 600,
+            'ckeditor_height' => array(
+              'value'       => 600,
               'description' => 'Height in px of CKeditor Area',
-              'type' => 'integer',
-              'allowempty' => 0,
-              'min' => 100,
-              'max' => 800,
-              'category'=> 'CKEditor',
+              'type'        => 'integer',
+              'allowempty'  => 0,
+              'min'         => 100,
+              'max'         => 800,
+              'category'    => 'CKEditor',
             ),
-            'ckeditor_fulltemplate' => array (
+            'ckeditor_fulltemplate' => array(
               'description' => 'Allow templates to be edited as full HTML pages',
-              'type' => 'boolean',
-              'value' => '1',
-              'allowempty' => true,
-              'category'=> 'CKEditor',
+              'type'        => 'boolean',
+              'value'       => '1',
+              'allowempty'  => false,
+              'category'    => 'CKEditor',
             ),
-            'ckeditor_fullmessage' => array (
+            'ckeditor_fullmessage' => array(
               'description' => 'Allow messages to be edited as full HTML pages',
-              'type' => 'boolean',
-              'value' => '0',
-              'allowempty' => true,
-              'category'=> 'CKEditor',
-            )
+              'type'        => 'boolean',
+              'value'       => '0',
+              'allowempty'  => false,
+              'category'    => 'CKEditor',
+            ),
         );
 
         if ($this->kcEnabled) {
             $this->settings += array(
-                'kcfinder_path' => array (
-                  'value' =>  PLUGIN_ROOTDIR . self::CODE_DIR . 'kcfinder',
+                'kcfinder_path' => array(
+                  'value'       => PLUGIN_ROOTDIR.self::CODE_DIR.'kcfinder',
                   'description' => 'Path to KCFinder',
-                  'type' => 'text',
-                  'allowempty' => 0,
-                  'category'=> 'CKEditor',
+                  'type'        => 'text',
+                  'allowempty'  => 0,
+                  'category'    => 'CKEditor',
                 ),
-                'kcfinder_uploaddir' => array (
-                  'value' => '',
+                'kcfinder_uploaddir' => array(
+                  'value'       => '',
                   'description' => 'File system path to the upload image directory. Usually leave this empty.',
-                  'type' => 'text',
-                  'allowempty' => 1,
-                  'category'=> 'CKEditor',
+                  'type'        => 'text',
+                  'allowempty'  => 1,
+                  'category'    => 'CKEditor',
                 ),
-                'kcfinder_image_directory' => array (
-                  'value' => 'image',
+                'kcfinder_image_directory' => array(
+                  'value'       => 'image',
                   'description' => 'Name of the image subdirectory of the file upload directory',
-                  'type' => 'text',
-                  'allowempty' => 0,
-                  'category'=> 'CKEditor',
+                  'type'        => 'text',
+                  'allowempty'  => 0,
+                  'category'    => 'CKEditor',
                 ),
-                'kcfinder_files_directory' => array (
-                  'value' => 'files',
+                'kcfinder_files_directory' => array(
+                  'value'       => 'files',
                   'description' => 'Name of the files subdirectory of the file upload directory',
-                  'type' => 'text',
-                  'allowempty' => 0,
-                  'category'=> 'CKEditor',
+                  'type'        => 'text',
+                  'allowempty'  => 0,
+                  'category'    => 'CKEditor',
                 ),
-                'kcfinder_flash_directory' => array (
-                  'value' => 'flash',
+                'kcfinder_flash_directory' => array(
+                  'value'       => 'flash',
                   'description' => 'Name of the flash subdirectory of the file upload directory',
-                  'type' => 'text',
-                  'allowempty' => 0,
-                  'category'=> 'CKEditor',
+                  'type'        => 'text',
+                  'allowempty'  => 0,
+                  'category'    => 'CKEditor',
                 ),
             );
         }
         parent::__construct();
-    }
-    
-    public function dependencyCheck()
-    {
-        global $editorplugin;
-
-        return array(
-            'PHP version at least 5.3.0' => version_compare(PHP_VERSION, '5.3') > 0,
-            'No other editor enabled' => empty($editorplugin) || $editorplugin == __CLASS__,
-        );
     }
 
     public function adminmenu()
