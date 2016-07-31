@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CKEditorPlugin for phplist.
  * 
@@ -173,13 +174,13 @@ END;
             $settings[] = 'fullPage: true';
         }
 
-        if ($fieldname == 'message' && $fullMessage && !$fullTemplate) {
+        if ($fieldname == 'message' && $fullMessage) {
             $settings[] = 'fullPage: true';
         }
 
         if ($this->kcEnabled) {
             $session = array(
-                'disabled' => false,
+                'disabled'  => false,
                 'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/')),
             );
             $uploadDirIsValid = false;
@@ -216,12 +217,12 @@ END;
                 $_SESSION['KCFINDER'] = $session;
                 $kcPath = rtrim(getConfig('kcfinder_path'), '/');
                 $settings[] = <<<END
-filebrowserBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFilesDir',
-filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir',
-filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir',
-filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir',
-filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir',
-filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir'
+filebrowserBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFilesDir&cms=phplist',
+filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir&cms=phplist',
+filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir&cms=phplist',
+filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir&cms=phplist',
+filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir&cms=phplist',
+filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir&cms=phplist'
 END;
             } else {
                 $format = <<<END
@@ -267,56 +268,56 @@ END;
     public function __construct()
     {
         $this->kcEnabled = defined('UPLOADIMAGES_DIR') && UPLOADIMAGES_DIR !== false;
-        $this->coderoot = dirname(__FILE__) . self::CODE_DIR;
-        $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
+        $this->coderoot = dirname(__FILE__).self::CODE_DIR;
+        $this->version = (is_file($f = $this->coderoot.self::VERSION_FILE))
             ? file_get_contents($f)
             : '';
         $this->settings = array(
-            'ckeditor_url' => array(
-              'value' => '//cdn.ckeditor.com/4.5.7/full/ckeditor.js',
-              'description' => 'URL of ckeditor.js',
-              'type' => 'text',
-              'allowempty' => 0,
-              'category' => 'CKEditor',
+            'ckeditor_path' => array(
+              'value'       => PLUGIN_ROOTDIR.self::CODE_DIR.'ckeditor',
+              'description' => 'Path to CKeditor',
+              'type'        => 'text',
+              'allowempty'  => 0,
+              'category'    => 'CKEditor',
             ),
             'ckeditor_config_path' => array(
-              'value' => '',
+              'value'       => '',
               'description' => 'Path to CKeditor custom configuration file',
-              'type' => 'text',
-              'allowempty' => 1,
-              'category' => 'CKEditor',
+              'type'        => 'text',
+              'allowempty'  => 1,
+              'category'    => 'CKEditor',
             ),
             'ckeditor_width' => array(
-              'value' => 600,
+              'value'       => 600,
               'description' => 'Width in px of CKeditor Area',
-              'type' => 'integer',
-              'allowempty' => 0,
-              'min' => 100,
-              'max' => 800,
-              'category' => 'CKEditor',
+              'type'        => 'integer',
+              'allowempty'  => 0,
+              'min'         => 100,
+              'max'         => 800,
+              'category'    => 'CKEditor',
             ),
             'ckeditor_height' => array(
-              'value' => 600,
+              'value'       => 600,
               'description' => 'Height in px of CKeditor Area',
-              'type' => 'integer',
-              'allowempty' => 0,
-              'min' => 100,
-              'max' => 800,
-              'category' => 'CKEditor',
+              'type'        => 'integer',
+              'allowempty'  => 0,
+              'min'         => 100,
+              'max'         => 800,
+              'category'    => 'CKEditor',
             ),
             'ckeditor_fulltemplate' => array(
               'description' => 'Allow templates to be edited as full HTML pages',
-              'type' => 'boolean',
-              'value' => '1',
-              'allowempty' => true,
-              'category' => 'CKEditor',
+              'type'        => 'boolean',
+              'value'       => '1',
+              'allowempty'  => false,
+              'category'    => 'CKEditor',
             ),
             'ckeditor_fullmessage' => array(
               'description' => 'Allow messages to be edited as full HTML pages',
-              'type' => 'boolean',
-              'value' => '0',
-              'allowempty' => true,
-              'category' => 'CKEditor',
+              'type'        => 'boolean',
+              'value'       => '0',
+              'allowempty'  => false,
+              'category'    => 'CKEditor',
             ),
         );
 
