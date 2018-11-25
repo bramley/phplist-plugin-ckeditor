@@ -216,6 +216,7 @@ END;
                 $_SESSION['KCFINDER'] = $session;
                 $kcPath = rtrim(getConfig('kcfinder_path'), '/');
                 $settings[] = <<<END
+filebrowserUploadMethod: 'form',
 filebrowserBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFilesDir',
 filebrowserImageBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcImageDir',
 filebrowserFlashBrowseUrl: '$kcPath/browse.php?opener=ckeditor&type=$kcFlashDir',
