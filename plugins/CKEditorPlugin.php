@@ -1,7 +1,7 @@
 <?php
 /**
  * CKEditorPlugin for phplist.
- * 
+ *
  * This file is a part of CKEditorPlugin.
  *
  * This plugin is free software: you can redistribute it and/or modify
@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -40,9 +40,9 @@ class CKEditorPlugin extends phplistPlugin
 
     /**
      * Generate the script for kcfinder.
-     * 
+     *
      * See http://kcfinder.sunhater.com/docs/integrate Custom Applications
-     * 
+     *
      * @param string $function Name to be used for the callback function
      *
      * @return string the script element
@@ -70,7 +70,7 @@ END;
 
     /**
      * Generate the textarea element.
-     * 
+     *
      * @param string $fieldname Name to be used for the textarea element
      * @param string $content   The content for the element
      *
@@ -90,7 +90,7 @@ END;
     /**
      * Generate a script element wrapping the CKEditor javascript.
      * ckeditor.js is loaded synchronously in a script element.
-     * 
+     *
      * @param string $ckeditorUrl URL for ckeditor.js
      * @param string $ckScript    The CKEditor javascript to be wrapped
      *
@@ -111,7 +111,7 @@ END;
     /**
      * Generate a script element wrapping the CKEditor javascript.
      * ckeditor.js is loaded dynamically by jQuery and asynchronously.
-     * 
+     *
      * @param string $ckeditorUrl URL for ckeditor.js
      * @param string $ckScript    The CKEditor javascript to be wrapped
      *
@@ -143,8 +143,8 @@ END;
      * Generate the javascript to configure CKEditor.
      *
      * @param string $fieldname Name to be used on the textarea field
-     * @param int    $width     Width of the editor area 
-     * @param int    $height    Width of the editor area 
+     * @param int    $width     Width of the editor area
+     * @param int    $height    Width of the editor area
      * @param string $toolbar   The toolbar to use
      *
      * @return array [0] the javascript
@@ -385,7 +385,7 @@ END;
      * This method loads ckeditor.js in a script element.
      *
      * @param string $fieldname Name to be used on the textarea field
-     * @param string $content   The content to be displayed 
+     * @param string $content   The content to be displayed
      *
      * @return string the complete html and script to display the editor
      */
@@ -408,9 +408,9 @@ END;
      * the requesting page is being loaded by jquery (in Content Areas plugin).
      *
      * @param string $fieldname Name to be used on the textarea field
-     * @param string $content   The content to be displayed 
-     * @param int    $width     Width of the editor area 
-     * @param int    $height    Width of the editor area 
+     * @param string $content   The content to be displayed
+     * @param int    $width     Width of the editor area
+     * @param int    $height    Width of the editor area
      * @param string $toolbar   The toolbar to use
      *
      * @return string the complete html and script to display the editor

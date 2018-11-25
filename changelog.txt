@@ -1,3 +1,8 @@
+version 2.1.5+20181125
+      Add ckeditor config entry for file browser upload method
+      Rename cs config file
+      Remove trailing spaces
+
 version 2.1.4+20180930
       Use CKEditor version 4.10.1
       Correct indentation
