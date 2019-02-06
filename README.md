@@ -19,7 +19,7 @@ The benefit of this is that plugins will not be affected when you upgrade phplis
 ### Install through phplist ###
 Install on the Manage Plugins page (menu Config > Manage Plugins) using the package URL `https://github.com/bramley/phplist-plugin-ckeditor/archive/master.zip`.
 
-In phplist releases 3.0.5 and earlier there is a bug that can cause a plugin to be incompletely installed on some configurations (<https://mantis.phplist.com/view.php?id=16865>). 
+In phplist releases 3.0.5 and earlier there is a bug that can cause a plugin to be incompletely installed on some configurations (<https://mantis.phplist.com/view.php?id=16865>).
 Check that these files are in the plugin directory. If not then you will need to install manually. The bug has been fixed in release 3.0.6.
 
 * the file CKEditorPlugin.php
@@ -66,6 +66,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.2.0+20190206  Avoid KCFinder js file being reported as malware by ClamAV
     2.1.5+20181125  Add ckeditor config entry for file browser upload method
     2.1.4+20180930  Use CKEditor version 4.10.1
     2.1.3+20160603  Improve derivation of path to upload directory
