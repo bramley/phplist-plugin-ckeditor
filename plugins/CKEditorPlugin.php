@@ -39,6 +39,38 @@ class CKEditorPlugin extends phplistPlugin
     public $enabled = 1;
 
     /**
+     * Work-out the upload directory.
+     * The plugin setting kcfinder_uploaddir takes priority over UPLOADIMAGES_DIR.
+     *
+     * @return array [0] whether the directory exists and is writeable
+     *               [1] the directory path
+     */
+    private function deriveUploadDir()
+    {
+        $uploadDirIsValid = false;
+        $kcUploadDir = getConfig('kcfinder_uploaddir');
+
+        if ($kcUploadDir) {
+            if (is_writeable($kcUploadDir)) {
+                $uploadDirIsValid = true;
+            }
+        } else {
+            $kcUploadDir = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/' . trim(UPLOADIMAGES_DIR, '/');
+            $realUploadDir = realpath($kcUploadDir);
+
+            if ($realUploadDir) {
+                $kcUploadDir = $realUploadDir;
+
+                if (is_writeable($kcUploadDir)) {
+                    $uploadDirIsValid = true;
+                }
+            }
+        }
+
+        return array($uploadDirIsValid, $kcUploadDir);
+    }
+
+    /**
      * Generate the script for kcfinder.
      *
      * See http://kcfinder.sunhater.com/docs/integrate Custom Applications
@@ -176,44 +208,41 @@ END;
         if ($fieldname == 'message' && $fullMessage && !$fullTemplate) {
             $settings[] = 'fullPage: true';
         }
+        unset($_SESSION['KCFINDER']);
 
         if ($this->kcEnabled) {
-            $session = array(
-                'disabled' => false,
-                'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/')),
-            );
-            $uploadDirIsValid = false;
-            $kcUploadDir = getConfig('kcfinder_uploaddir');
+            list($uploadDirIsValid, $kcUploadDir) = $this->deriveUploadDir();
 
-            if ($kcUploadDir) {
-                if (is_writeable($kcUploadDir)) {
-                    $uploadDirIsValid = true;
-                }
+            if (!extension_loaded('GD')) {
+                $html .= <<<END
+<div class="note">
+Image browsing is not available because the GD extension is not installed.
+</div>
+END;
+            } elseif (!$uploadDirIsValid) {
+                $format = <<<END
+<div class="note">
+Image browsing is not available because directory "%s" does not exist or is not writeable.<br/>
+<a href="https://resources.phplist.com/plugin/ckeditor#issues" target="_blank">How to resolve this problem.</a>
+</div>
+END;
+                $html .= sprintf($format, htmlspecialchars($kcUploadDir));
             } else {
-                $kcUploadDir = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/' . trim(UPLOADIMAGES_DIR, '/');
-                $realUploadDir = realpath($kcUploadDir);
-
-                if ($realUploadDir) {
-                    $kcUploadDir = $realUploadDir;
-
-                    if (is_writeable($kcUploadDir)) {
-                        $uploadDirIsValid = true;
-                    }
-                }
-            }
-
-            if ($uploadDirIsValid) {
-                $session['uploadDir'] = $kcUploadDir;
                 $kcImageDir = getConfig('kcfinder_image_directory');
                 $kcFilesDir = getConfig('kcfinder_files_directory');
                 $kcFlashDir = getConfig('kcfinder_flash_directory');
-                $session['types'] = array(
-                    $kcFilesDir => '',
-                    $kcFlashDir => 'swf',
-                    $kcImageDir => '*img',
+                $_SESSION['KCFINDER'] = array(
+                    'disabled' => false,
+                    'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/')),
+                    'uploadDir' => $kcUploadDir,
+                    'types' => array(
+                        $kcFilesDir => '',
+                        $kcFlashDir => 'swf',
+                        $kcImageDir => '*img',
+                    ),
+                    'imageDriversPriority' => 'gd',
                 );
 
-                $_SESSION['KCFINDER'] = $session;
                 $kcPath = rtrim(getConfig('kcfinder_path'), '/');
                 $settings[] = <<<END
 filebrowserUploadMethod: 'form',
@@ -224,14 +253,6 @@ filebrowserUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFilesDir',
 filebrowserImageUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcImageDir',
 filebrowserFlashUploadUrl: '$kcPath/upload.php?opener=ckeditor&type=$kcFlashDir'
 END;
-            } else {
-                $format = <<<END
-<div class="note error">
-Image browsing is not available because directory "%s" does not exist or is not writeable.
-<a href="https://resources.phplist.com/plugin/ckeditor#issues" target="_blank">How to resolve this problem.</a>
-</div>
-END;
-                $html .= sprintf($format, htmlspecialchars($kcUploadDir));
             }
         }
 

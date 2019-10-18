@@ -1,3 +1,8 @@
+version 2.3.0+20191019
+      Limit image extensions to only GD
+      Display "image browsing is not available" messages as information not error
+      Restructuring of working-out the upload directory
+
 version 2.2.0+20190206
       Update KCFinder jquery to 1.12.4 and jquery-ui to 1.12.1
       Remove pre-cached js and css files
