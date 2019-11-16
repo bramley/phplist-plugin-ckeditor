@@ -1,3 +1,7 @@
+version 2.3.1+20191116
+      Address problem with trevelin theme of drop-down menus extending across the window.
+      https://mantis.phplist.org/view.php?id=20112
+
 version 2.3.0+20191019
       Limit image extensions to only GD
       Display "image browsing is not available" messages as information not error
