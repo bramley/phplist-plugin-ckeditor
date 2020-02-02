@@ -131,9 +131,6 @@ END;
     private function scriptForSyncLoad($ckeditorUrl, $ckScript)
     {
         $script = <<<END
-<style type="text/css">
-.cke {width: auto !important;}
-</style>
 <script type="text/javascript" src="$ckeditorUrl"></script>
 <script><!--
 $ckScript

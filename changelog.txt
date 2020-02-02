@@ -1,3 +1,6 @@
+version 2.3.2+20200202
+      Undo previous change to fix width of drop-down menus because the trevellin theme has now been fixed in phplist 3.5.0.
+
 version 2.3.1+20191116
       Address problem with trevelin theme of drop-down menus extending across the window.
       https://mantis.phplist.org/view.php?id=20112
