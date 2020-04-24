@@ -17,7 +17,7 @@ namespace kcfinder;
 class uploader {
 
 /** Release version */
-    const VERSION = "3.12";
+    const VERSION = "3.20-test2";
 
 /** Config session-overrided settings
   * @var array */
@@ -103,7 +103,7 @@ class uploader {
         )
             $this->cms = $_GET['cms'];
 
-		// LINKING UPLOADED FILE
+        // LINKING UPLOADED FILE
         if (count($_FILES))
             $this->file = &$_FILES[key($_FILES)];
 
@@ -172,7 +172,7 @@ class uploader {
         if ((!isset($driver) || ($driver === false)) &&
             (image::getDriver(array($this->imageDriver)) === false)
         )
-            die("Cannot find any of the supported PHP image extensions!");
+            $this->backMsg("Cannot find any of the supported PHP image extensions!");
 
         // WATERMARK INIT
         if (isset($this->config['watermark']) && is_string($this->config['watermark']))
@@ -228,7 +228,7 @@ class uploader {
         } elseif ($this->config['uploadURL'] == "/") {
             $this->config['uploadDir'] = strlen($this->config['uploadDir'])
                 ? path::normalize($this->config['uploadDir'])
-                : path::normalize($_SERVER['DOCUMENT_ROOT']);
+                : path::normalize(realpath($_SERVER['DOCUMENT_ROOT']));
             $this->typeDir = "{$this->config['uploadDir']}/{$this->type}";
             $this->typeURL = "/{$this->type}";
 
@@ -758,10 +758,42 @@ class uploader {
             $js = $this->callBack_default($url, $message);
 
         header("Content-Type: text/html; charset={$this->charset}");
-        echo "<html><body>$js</body></html>";
+        //echo "<html><body>$js</body></html>";
+        echo "$js";
     }
 
-    protected function callBack_ckeditor($url, $message) {
+    protected function callBack_ckeditor($url, $message)
+    {
+        $CKfuncNum = isset($this->opener['CKEditor']['funcNum']) ? $this->opener['CKEditor']['funcNum'] : 0;
+        if (!$CKfuncNum)
+        {
+           $CKfuncNum = 0;
+           return "{\"fileName\":\"image\",\"uploaded\":1,\"url\":\"$url\"}";
+        }
+        else
+        {
+           return "<html><body><script type='text/javascript'>
+              var par = window.parent,
+              op = window.opener,
+              o = (par && par.CKEDITOR) ? par : ((op && op.CKEDITOR) ? op : false);
+              if (o !== false) {
+                 if (op) window.close();
+                 o.CKEDITOR.tools.callFunction($CKfuncNum, '$url', '$message');
+              }
+              else
+              {
+                 alert('$message');
+                 if (op) window.close();
+              }
+           </script></body></html>";
+        }
+
+    }
+
+
+
+
+    protected function callBack_ckeditorOrigineel($url, $message) {
         $CKfuncNum = isset($this->opener['CKEditor']['funcNum']) ? $this->opener['CKEditor']['funcNum'] : 0;
         if (!$CKfuncNum) $CKfuncNum = 0;
         return "<script type='text/javascript'>
@@ -777,6 +809,10 @@ if (o !== false) {
 }
 </script>";
     }
+
+
+
+
 
     protected function callBack_fckeditor($url, $message) {
         $n = strlen($message) ? 1 : 0;
@@ -813,5 +849,3 @@ if (window.opener) window.close();
         return file_get_contents("conf/upload.htaccess");
     }
 }
-
-?>
