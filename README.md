@@ -4,6 +4,7 @@
 This plugin provides CKEditor for editing messages and templates within phplist. It also integrates the KCFinder file manager to provide file upload and selection.
 
 The plugin has been included in phplist since release 3.2.0 of phplist, so you should not normally need to install the plugin yourself.
+
 ## Compatibility ###
 
 CKEditor and KCFinder are compatible with all the major browsers, see the CKEditor site <http://ckeditor.com/about>
@@ -16,14 +17,9 @@ The default plugin directory is `plugins` within the admin directory.
 
 You can use a directory outside of the web root by changing the definition of `PLUGIN_ROOTDIR` in config.php.
 The benefit of this is that plugins will not be affected when you upgrade phplist.
+
 ### Install through phplist ###
 Install on the Manage Plugins page (menu Config > Manage Plugins) using the package URL `https://github.com/bramley/phplist-plugin-ckeditor/archive/master.zip`.
-
-In phplist releases 3.0.5 and earlier there is a bug that can cause a plugin to be incompletely installed on some configurations (<https://mantis.phplist.com/view.php?id=16865>). 
-Check that these files are in the plugin directory. If not then you will need to install manually. The bug has been fixed in release 3.0.6.
-
-* the file CKEditorPlugin.php
-* the directory CKEditorPlugin
 
 ### Install manually ###
 If installation through phplist does not work then you can install the plugin manually.
@@ -37,7 +33,11 @@ This should contain
 * the directory CKEditorPlugin
 
 ### Enable the plugin ###
-Click the small orange icon to enable the plugin. Note that only one editor can be enabled.
+Click the Enable action button to enable the plugin. Note that only one editor can be enabled.
+
+### Enabling KCFinder ###
+The php GD extension is required to use KCFinder. If that extension is not installed then the CKEditor image control will still be available
+but without the ability to upload and browse the image directory.
 
 ### Location of the KCFinder directory ###
 The KCFinder directory must be within the web root.
@@ -66,6 +66,12 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.3.2+20200202  Undo previous change to fix width of drop-down menus
+    2.3.1+20191116  Fix problem with trevelin theme of drop-down menus extending across the window
+    2.3.0+20191019  Limit image extension to GD only
+    2.2.0+20190206  Avoid KCFinder js file being reported as malware by ClamAV
+    2.1.5+20181125  Add ckeditor config entry for file browser upload method
+    2.1.4+20180930  Use CKEditor version 4.10.1
     2.1.3+20160603  Improve derivation of path to upload directory
     2.1.2+20160514  Update KCFinder .htaccess file
     2.1.1+20160513  Move configuration documentation to the phplist site
