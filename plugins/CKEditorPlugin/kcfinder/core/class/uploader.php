@@ -103,7 +103,7 @@ class uploader {
         )
             $this->cms = $_GET['cms'];
 
-		// LINKING UPLOADED FILE
+        // LINKING UPLOADED FILE
         if (count($_FILES))
             $this->file = &$_FILES[key($_FILES)];
 
@@ -212,8 +212,10 @@ class uploader {
                     $this->opener['name'] = false;
                 else
                     $this->opener['TinyMCE'] = array('field' => $_GET['field']);
+            } elseif ($_GET['opener'] == "ckeditor" && isset($_GET['responseType'])) {
+                // used for pasted and dragged content
+                $this->opener['responseType'] = $_GET['responseType'];
             }
-
         } else
             $this->opener['name'] = false;
 
@@ -708,13 +710,22 @@ class uploader {
         if (!isset($js))
             $js = $this->callBack_default($url, $message);
 
-        header("Content-Type: text/html; charset={$this->charset}");
-        echo "<html><body>$js</body></html>";
+        if (isset($this->opener['responseType']) && $this->opener['responseType'] == 'json') {
+            header("Content-Type: text/javascript; charset={$this->charset}");
+            echo $js;
+        } else {
+            header("Content-Type: text/html; charset={$this->charset}");
+            echo "<html><body>$js</body></html>";
+        }
     }
 
     protected function callBack_ckeditor($url, $message) {
-        $CKfuncNum = isset($this->opener['CKEditor']['funcNum']) ? $this->opener['CKEditor']['funcNum'] : 0;
-        if (!$CKfuncNum) $CKfuncNum = 0;
+        if (!isset($this->opener['CKEditor']['funcNum'])) {
+            // ckeditor pasted or dragged content
+            return "{\"fileName\":\"image\",\"uploaded\":1,\"url\":\"$url\"}";
+        }
+        $CKfuncNum = $this->opener['CKEditor']['funcNum'];
+
         return "<script type='text/javascript'>
 var par = window.parent,
     op = window.opener,
