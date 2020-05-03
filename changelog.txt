@@ -1,3 +1,9 @@
+version 2.4.0+20200503
+      Upgrade to KCFinder 3.20 Test 2
+      Replace use of each() which is deprecated in php 7.2
+      Support ckeditor drag and paste, resolves #20
+      Update PHP CS Fixer config file
+
 version 2.3.2+20200202
       Undo previous change to fix width of drop-down menus because the trevellin theme has now been fixed in phplist 3.5.0.
 
