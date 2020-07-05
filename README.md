@@ -66,6 +66,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.5.0+20200706  Initialise the kcfinder session with the same settings as core phplist
     2.4.0+20200503  Support ckeditor drag and paste an image
     2.3.2+20200202  Undo previous change to fix width of drop-down menus
     2.3.1+20191116  Fix problem with trevelin theme of drop-down menus extending across the window

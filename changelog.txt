@@ -1,3 +1,7 @@
+version 2.5.0+20200706
+Michiel Dethmers (1):
+      Initialise the kcfinder session with the same settings as core phplist by using cms integration. Fixes #21.
+
 version 2.4.0+20200503
       Upgrade to KCFinder 3.20 Test 2
       Replace use of each() which is deprecated in php 7.2
