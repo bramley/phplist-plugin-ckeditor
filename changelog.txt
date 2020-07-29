@@ -1,3 +1,6 @@
+version 2.6.0+20200801
+      Support having an upload image directory for each admin. Use the admin id as the subdirectory name. Resolves #22
+
 version 2.5.0+20200706
 Michiel Dethmers (1):
       Initialise the kcfinder session with the same settings as core phplist by using cms integration. Fixes #21.

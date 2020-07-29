@@ -66,6 +66,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.6.0+20200801  Support having an upload image directory for each admin
     2.5.0+20200706  Initialise the kcfinder session with the same settings as core phplist
     2.4.0+20200503  Support ckeditor drag and paste an image
     2.3.2+20200202  Undo previous change to fix width of drop-down menus

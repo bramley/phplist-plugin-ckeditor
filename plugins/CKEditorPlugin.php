@@ -228,12 +228,19 @@ Image browsing is not available because directory "%s" does not exist or is not 
 END;
                 $html .= sprintf($format, htmlspecialchars($kcUploadDir));
             } else {
+                $uploadUrl = sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/'));
+
+                if (defined('IMAGE_DIR_PER_ADMIN') && IMAGE_DIR_PER_ADMIN) {
+                    $directory = $_SESSION['logindetails']['id'];
+                    $kcUploadDir .= "/$directory";
+                    $uploadUrl .= "/$directory";
+                }
                 $kcImageDir = getConfig('kcfinder_image_directory');
                 $kcFilesDir = getConfig('kcfinder_files_directory');
                 $kcFlashDir = getConfig('kcfinder_flash_directory');
                 $_SESSION['KCFINDER'] = array(
                     'disabled' => false,
-                    'uploadURL' => sprintf('%s://%s/%s', $public_scheme, $website, ltrim(UPLOADIMAGES_DIR, '/')),
+                    'uploadURL' => $uploadUrl,
                     'uploadDir' => $kcUploadDir,
                     'types' => array(
                         $kcFilesDir => '',
