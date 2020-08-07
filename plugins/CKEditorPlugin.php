@@ -83,7 +83,7 @@ class CKEditorPlugin extends phplistPlugin
     {
         $kcPath = rtrim(getConfig('kcfinder_path'), '/');
         $kcImageDir = getConfig('kcfinder_image_directory');
-        $kcUrl = htmlspecialchars("$kcPath/browse.php?type=$kcImageDir");
+        $kcUrl = "$kcPath/browse.php?type=$kcImageDir&cms=phplist";
         $html = <<<END
 <script type='text/javascript'>
 $function = function(callback) {
