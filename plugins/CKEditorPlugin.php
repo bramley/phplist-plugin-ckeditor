@@ -302,7 +302,7 @@ END;
             : '';
         $this->settings = array(
             'ckeditor_url' => array(
-                'value' => '//cdn.ckeditor.com/4.10.1/full/ckeditor.js',
+                'value' => '//cdn.ckeditor.com/4.14.1/full/ckeditor.js',
                 'description' => 'URL of ckeditor.js',
                 'type' => 'text',
                 'allowempty' => 0,
