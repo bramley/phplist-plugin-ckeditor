@@ -1,3 +1,6 @@
+version 2.6.2+20210428
+      Allow the plugin to be a dependency of phplist.
+
 version 2.6.1+20200807
       Use kcfinder cms integration with standalone image browser
       Use the latest release, 4.14.1, of ckeditor.
