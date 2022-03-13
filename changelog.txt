@@ -1,3 +1,6 @@
+version 2.6.3+20220313
+      Use HTTP_X_FORWARDED_FOR when present for the kcfinder session stamp because REMOTE_ADDR may vary for each request.
+
 version 2.6.2+20210428
       Allow the plugin to be a dependency of phplist.
 

@@ -66,6 +66,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.6.3+20220313  Use HTTP_X_FORWARDED_FOR when present for the kcfinder session stamp
     2.6.2+20210428  Allow the plugin to be a dependency of phplist
     2.6.1+20200807  Use CKEditor version 4.14.1
     2.6.0+20200801  Support having an upload image directory for each admin
