@@ -54,7 +54,7 @@ class session {
             // Destroy session if user agent is different (e.g. after browser update)
             if ($session['stamp']['ip'] === $stamp['ip'])
                 session_destroy();
-            die;
+            die('Change of session stamp detected');
         }
 
         // Load session configuration

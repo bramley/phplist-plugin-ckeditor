@@ -1,3 +1,7 @@
+version 2.6.4+20220319
+      Ensure that errors when trying to create image and thumbnail directories are passed back to the browser
+      Issue message when change of session stamp is detected
+
 version 2.6.3+20220313
       Use HTTP_X_FORWARDED_FOR when present for the kcfinder session stamp because REMOTE_ADDR may vary for each request.
 
