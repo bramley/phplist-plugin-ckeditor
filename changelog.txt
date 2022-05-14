@@ -1,3 +1,6 @@
+version 2.6.5+20220514
+      Avoid kcfinder using the domain parameter when setting a cookie for a host that is an IP address and port.
+
 version 2.6.4+20220319
       Ensure that errors when trying to create image and thumbnail directories are passed back to the browser
       Issue message when change of session stamp is detected
