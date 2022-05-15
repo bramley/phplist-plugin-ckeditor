@@ -1,3 +1,6 @@
+version 2.6.6+20220515
+      Correct mistake in previous commit for kcfinder domain
+
 version 2.6.5+20220514
       Avoid kcfinder using the domain parameter when setting a cookie for a host that is an IP address and port.
 
