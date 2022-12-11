@@ -16,7 +16,7 @@ namespace kcfinder;
 class fastImage
 {
   private $strpos = 0;
-  private $str;
+  private $str = '';
   private $uri;
   private $type;
   private $handle;

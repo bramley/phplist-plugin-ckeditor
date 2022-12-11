@@ -66,6 +66,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.6.7+20221231  Avoid php 8 deprecation notice
     2.6.6+20220515  Correct mistake in previous change
     2.6.5+20220514  Fix kcfinder cookie problem when host is an IP address and port
     2.6.4+20220319  Improve kcfinder error reporting
