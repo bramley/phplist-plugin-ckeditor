@@ -205,8 +205,17 @@ END;
             $settings[] = 'fullPage: true';
         }
 
-        if ($fieldname == 'message' && $fullMessage && !$fullTemplate) {
-            $settings[] = 'fullPage: true';
+        if ($fieldname == 'message' && $fullMessage) {
+            if ($fullTemplate) {
+                $html .= <<<END
+<div class="note error">Either templates or messages can be edited as a full HTML page, not both.
+This message will use only limited HTML.<br/>
+<a href="https://resources.phplist.com/plugin/ckeditor#issues" target="_blank">How to resolve this problem.</a>
+</div>
+END;
+            } else {
+                $settings[] = 'fullPage: true';
+            }
         }
         unset($_SESSION['KCFINDER']);
 
