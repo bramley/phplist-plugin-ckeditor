@@ -198,24 +198,8 @@ END;
         $settings = array();
         $settings[] = 'allowedContent: true';
 
-        $fullTemplate = getConfig('ckeditor_fulltemplate');
-        $fullMessage = getConfig('ckeditor_fullmessage');
-
-        if ($fieldname == 'template' && $fullTemplate) {
+        if ($fieldname == 'template' || ($fieldname == 'message' && getConfig('ckeditor_fullmessage'))) {
             $settings[] = 'fullPage: true';
-        }
-
-        if ($fieldname == 'message' && $fullMessage) {
-            if ($fullTemplate) {
-                $html .= <<<END
-<div class="note error">Either templates or messages can be edited as a full HTML page, not both.
-This message will use only limited HTML.<br/>
-<a href="https://resources.phplist.com/plugin/ckeditor#issues" target="_blank">How to resolve this problem.</a>
-</div>
-END;
-            } else {
-                $settings[] = 'fullPage: true';
-            }
         }
         unset($_SESSION['KCFINDER']);
 
@@ -340,13 +324,6 @@ END;
                 'allowempty' => 0,
                 'min' => 100,
                 'max' => 800,
-                'category' => 'CKEditor',
-            ),
-            'ckeditor_fulltemplate' => array(
-                'description' => 'Allow templates to be edited as full HTML pages',
-                'type' => 'boolean',
-                'value' => '1',
-                'allowempty' => true,
                 'category' => 'CKEditor',
             ),
             'ckeditor_fullmessage' => array(
