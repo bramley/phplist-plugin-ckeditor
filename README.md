@@ -3,34 +3,17 @@
 ## Description ##
 This plugin provides CKEditor for editing messages and templates within phplist. It also integrates the KCFinder file manager to provide file upload and selection.
 
-The plugin has been included in phplist since release 3.2.0 of phplist, so you should not normally need to install the plugin yourself.
+The plugin is now included in phplist so you should not normally need to install the plugin yourself.
+You can upgrade to the latest version of the plugin on the Manage Plugins page.
 
 ## Compatibility ###
 
-CKEditor and KCFinder are compatible with all the major browsers, see the CKEditor site <http://ckeditor.com/about>
-and the KCFinder site <http://kcfinder.sunhater.com/>
+CKEditor and KCFinder are compatible with all the major browsers.
 
 ## Installation ##
 
-### Set the plugin directory ###
-The default plugin directory is `plugins` within the admin directory.
-
-You can use a directory outside of the web root by changing the definition of `PLUGIN_ROOTDIR` in config.php.
-The benefit of this is that plugins will not be affected when you upgrade phplist.
-
-### Install through phplist ###
-Install on the Manage Plugins page (menu Config > Manage Plugins) using the package URL `https://github.com/bramley/phplist-plugin-ckeditor/archive/master.zip`.
-
-### Install manually ###
-If installation through phplist does not work then you can install the plugin manually.
-
-Download the plugin zip file from <https://github.com/bramley/phplist-plugin-ckeditor/archive/master.zip>
-
-Expand the zip file, then copy the contents of the plugins directory to your phplist plugins directory.
-This should contain
-
-* the file CKEditorPlugin.php
-* the directory CKEditorPlugin
+### Install or upgrade through phplist ###
+Install or upgrade on the Manage Plugins page (menu Config > Manage Plugins) using the package URL `https://github.com/bramley/phplist-plugin-ckeditor/archive/master.zip`
 
 ### Enable the plugin ###
 Click the Enable action button to enable the plugin. Note that only one editor can be enabled.
@@ -66,6 +49,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.6.9+20230518  Simplify when to use html full page in ckeditor
     2.6.8+20230407  Issue warning when full template and full message are both set
     2.6.7+20221231  Avoid php 8 deprecation notice
     2.6.6+20220515  Correct mistake in previous change
