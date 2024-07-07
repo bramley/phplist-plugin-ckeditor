@@ -1,7 +1,7 @@
 # CKEditor Plugin #
 
 ## Description ##
-This plugin provides CKEditor for editing messages and templates within phplist. It also integrates the KCFinder file manager to provide file upload and selection.
+This plugin provides CKEditor 4 for editing messages and templates within phplist. It also integrates the KCFinder file manager to provide file upload and selection.
 
 The plugin is now included in phplist so you should not normally need to install the plugin yourself.
 You can upgrade to the latest version of the plugin on the Manage Plugins page.
@@ -49,6 +49,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.7.0+20240707  Hide the warning about ckeditor being insecure
     2.6.9+20230518  Simplify when to use html full page in ckeditor
     2.6.8+20230407  Issue warning when full template and full message are both set
     2.6.7+20221231  Avoid php 8 deprecation notice

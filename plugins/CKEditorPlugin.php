@@ -39,6 +39,24 @@ class CKEditorPlugin extends phplistPlugin
     public $enabled = 1;
 
     /**
+     * CKEditor displays a warning about being insecure and recommending upgrading.
+     * This can be disabled by the admin otherwise show it only once in a phplist login session.
+     */
+    private function hideInsecureWarning()
+    {
+        if (getConfig('ckeditor_hide_warning') || isset($_SESSION['ckeditor_hide_warning'])) {
+            return <<<END
+<style>
+.cke_notification_warning { display: none;}
+</style>
+END;
+        }
+        $_SESSION['ckeditor_hide_warning'] = true;
+
+        return '';
+    }
+
+    /**
      * Work-out the upload directory.
      * The plugin setting kcfinder_uploaddir takes priority over UPLOADIMAGES_DIR.
      *
@@ -295,10 +313,17 @@ END;
             : '';
         $this->settings = array(
             'ckeditor_url' => array(
-                'value' => '//cdn.ckeditor.com/4.14.1/full/ckeditor.js',
+                'value' => '//cdn.ckeditor.com/4.22.1/full/ckeditor.js',
                 'description' => 'URL of ckeditor.js',
                 'type' => 'text',
                 'allowempty' => 0,
+                'category' => 'CKEditor',
+            ),
+            'ckeditor_hide_warning' => array(
+                'description' => 'Hide the warning about CKEditor not being secure',
+                'type' => 'boolean',
+                'value' => false,
+                'allowempty' => true,
                 'category' => 'CKEditor',
             ),
             'ckeditor_config_path' => array(
@@ -413,6 +438,7 @@ END;
 
         return $this->textArea($fieldname, $content)
             . $html
+            . $this->hideInsecureWarning()
             . $this->scriptForSyncLoad($ckeditorUrl, $ckScript);
     }
 
