@@ -49,6 +49,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.7.1+20240713  Use the documented method to disable version check
     2.7.0+20240707  Hide the warning about ckeditor being insecure
     2.6.9+20230518  Simplify when to use html full page in ckeditor
     2.6.8+20230407  Issue warning when full template and full message are both set
