@@ -1,3 +1,7 @@
+version 2.8.0+20250209
+      Use elfinder as file manager
+      Update ckeditor 4 -> 5
+
 version 2.7.1+20240713
       Use the documented method to disable version check
 
