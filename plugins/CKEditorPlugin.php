@@ -1,8 +1,24 @@
 <?php
-
-if (!defined('PHPLISTINIT')) {
-    die('Access denied');
-}
+/**
+ * CKEditorPlugin for phplist.
+ *
+ * This file is a part of CKEditorPlugin.
+ *
+ * This plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * This plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * @category  phplist
+ *
+ * @author    Duncan Cameron
+ * @copyright 2013-2018 Duncan Cameron
+ * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
+ * */
 
 class CKEditorPlugin extends phplistPlugin
 {
@@ -27,6 +43,12 @@ class CKEditorPlugin extends phplistPlugin
         $licenseKey = getConfig('ckeditor_license_key');
         $licenseKeyScript = "licenseKey: '$licenseKey'";
         $editorUrl = getConfig('ckeditor_url') ? getConfig('ckeditor_url') : self::CDN;
+        $configVersion = $this->getCkeditorVersion($editorUrl);
+        $cdnVersion = $this->getCkeditorVersion(self::CDN);
+
+        if (version_compare($configVersion, $cdnVersion, '<')) {
+            $editorUrl = self::CDN;
+        }
 
         $script = $this->editorScript($fieldName, $width, $height, $licenseKeyScript, $editorUrl);
         $fieldName = htmlspecialchars($fieldName);
@@ -140,4 +162,10 @@ END;
                 break;
         }
     }
+
+    public function getCkeditorVersion($url) {
+        preg_match('/ckeditor5\/([\d\.]+)\//', $url, $matches);
+        return $matches[1] ?? null;
+    }
+
 }
