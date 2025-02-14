@@ -323,24 +323,6 @@ END;
                 'allowempty' => 1,
                 'category' => 'CKEditor',
             ),
-            'ckeditor_width' => array(
-                'value' => 600,
-                'description' => 'Width in px of CKeditor Area',
-                'type' => 'integer',
-                'allowempty' => 0,
-                'min' => 100,
-                'max' => 800,
-                'category' => 'CKEditor',
-            ),
-            'ckeditor_height' => array(
-                'value' => 600,
-                'description' => 'Height in px of CKeditor Area',
-                'type' => 'integer',
-                'allowempty' => 0,
-                'min' => 100,
-                'max' => 800,
-                'category' => 'CKEditor',
-            ),
             'ckeditor_fullmessage' => array(
                 'description' => 'Allow messages to be edited as full HTML pages',
                 'type' => 'boolean',
@@ -356,6 +338,29 @@ END;
                 'category' => 'CKEditor',
             ),
         );
+
+        if (isset($_SESSION['ui']) && $_SESSION['ui'] == 'dressprow') {
+            $this->settings += [
+                'ckeditor_width' => [
+                    'value' => 600,
+                    'description' => 'Width in px of CKeditor Area',
+                    'type' => 'integer',
+                    'allowempty' => 0,
+                    'min' => 100,
+                    'max' => 800,
+                    'category' => 'CKEditor',
+                ],
+                'ckeditor_height' => [
+                    'value' => 600,
+                    'description' => 'Height in px of CKeditor Area',
+                    'type' => 'integer',
+                    'allowempty' => 0,
+                    'min' => 100,
+                    'max' => 800,
+                    'category' => 'CKEditor',
+                ],
+            ];
+        }
 
         if ($this->kcEnabled) {
             $this->settings += array(
