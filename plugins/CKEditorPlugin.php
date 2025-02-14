@@ -179,12 +179,11 @@ END;
      * @param string $fieldname Name to be used on the textarea field
      * @param int    $width     Width of the editor area
      * @param int    $height    Width of the editor area
-     * @param string $toolbar   The toolbar to use
      *
      * @return array [0] the javascript
      *               [1] additional html for warning messages
      */
-    private function editorScript($fieldname, $width, $height, $toolbar = null)
+    private function editorScript($fieldname, $width, $height)
     {
         global $website, $public_scheme, $systemroot;
 
@@ -280,10 +279,6 @@ END;
 
         if ($height) {
             $settings[] = "height: $height";
-        }
-
-        if ($toolbar) {
-            $settings[] = "toolbar: '$toolbar'";
         }
         $configSettings = implode(",\n", $settings);
         $script = <<<END
@@ -452,13 +447,12 @@ END;
      * @param string $content   The content to be displayed
      * @param int    $width     Width of the editor area
      * @param int    $height    Width of the editor area
-     * @param string $toolbar   The toolbar to use
      *
      * @return string the complete html and script to display the editor
      */
-    public function createEditor($fieldname, $content, $width = null, $height = null, $toolbar = null)
+    public function createEditor($fieldname, $content, $width = null, $height = null)
     {
-        list($ckScript, $html) = $this->editorScript($fieldname, $width, $height, $toolbar);
+        list($ckScript, $html) = $this->editorScript($fieldname, $width, $height);
 
         $ckeditorUrl = getConfig('ckeditor_url');
         $host = parse_url($ckeditorUrl, PHP_URL_HOST);
