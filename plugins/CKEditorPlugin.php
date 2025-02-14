@@ -174,6 +174,8 @@ END;
     /**
      * Generate the javascript to configure CKEditor.
      *
+     * @see https://ckeditor.com/docs/ckeditor4/latest/guide/dev_disallowed_content.html#how-to-allow-everything-except
+     *
      * @param string $fieldname Name to be used on the textarea field
      * @param int    $width     Width of the editor area
      * @param int    $height    Width of the editor area
@@ -196,7 +198,16 @@ END;
             );
         }
         $settings = array();
-        $settings[] = 'allowedContent: true';
+        $settings[] = <<<END
+allowedContent: {
+    $1: {
+        elements: CKEDITOR.dtd,
+        attributes: true,
+        styles: true,
+        classes: true
+    }
+}
+END;
         $settings[] = 'versionCheck: false';
 
         if ($fieldname == 'template' || ($fieldname == 'message' && getConfig('ckeditor_fullmessage'))) {
@@ -276,13 +287,21 @@ END;
         }
         $configSettings = implode(",\n", $settings);
         $script = <<<END
-            CKEDITOR.replace(
-                '$fieldname',
-                {
-                    $configSettings
-                }
-            );
+CKEDITOR.replace(
+    '$fieldname',
+    {
+        $configSettings
+    }
+);
+
 END;
+        if (getConfig('ckeditor_disallow')) {
+            // add disallowed content to any specified in the custom config file
+            $script .= <<<'END'
+CKEDITOR.config.disallowedContent = 'script; *[on*]; iframe;' + CKEDITOR.config.disallowedContent;
+
+END;
+        }
 
         return array($script, $html);
     }
@@ -331,6 +350,13 @@ END;
                 'description' => 'Allow messages to be edited as full HTML pages',
                 'type' => 'boolean',
                 'value' => '0',
+                'allowempty' => true,
+                'category' => 'CKEditor',
+            ),
+            'ckeditor_disallow' => array(
+                'description' => 'Disallow javascript',
+                'type' => 'boolean',
+                'value' => '1',
                 'allowempty' => true,
                 'category' => 'CKEditor',
             ),
