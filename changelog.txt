@@ -1,3 +1,8 @@
+version 2.8.0+20250214
+      Add setting to disallow javascript elements and attributes and iframes
+      Remove obsolete toolbar parameter
+      Update cs fixer rules
+
 version 2.7.1+20240713
       Use the documented method to disable version check
 
