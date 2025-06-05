@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CKEditorPlugin for phplist.
  *
@@ -197,7 +198,9 @@ END;
             );
         }
         $settings = array();
-        $settings[] = <<<END
+
+        if (getConfig('ckeditor_disallow')) {
+            $settings[] = <<<END
 allowedContent: {
     $1: {
         elements: CKEDITOR.dtd,
@@ -207,6 +210,9 @@ allowedContent: {
     }
 }
 END;
+        } else {
+            $settings[] = 'allowedContent: true';
+        }
         $settings[] = 'versionCheck: false';
 
         if ($fieldname == 'template' || ($fieldname == 'message' && getConfig('ckeditor_fullmessage'))) {
@@ -331,7 +337,7 @@ END;
                 'category' => 'CKEditor',
             ),
             'ckeditor_disallow' => array(
-                'description' => 'Disallow javascript',
+                'description' => 'Disallow insecure features such as javascript',
                 'type' => 'boolean',
                 'value' => '1',
                 'allowempty' => true,

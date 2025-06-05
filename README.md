@@ -49,6 +49,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.8.2+20250605  Allow the previous allowedContent filter to be used
     2.8.1+20250214  Display config settings for width and height only for the Dressprow theme
     2.8.0+20250214  Add setting to disallow javascript elements and attributes and iframes
     2.7.1+20240713  Use the documented method to disable version check
